@@ -14,7 +14,8 @@ let arr = [22, 24, 234];
 let query1 = {
   $lt: 40,
   $gt: 20,
-  $eq: 24
+  $eq: 24,
+  $nin: [23, 25, 27]
 };
 
 let query = {
@@ -29,7 +30,7 @@ let query = {
 
 let time = Date.now();
 
-let func = compiler(query);
-let results = _.filter(docs, func);
+let func = compiler(query1);
+let results = _.filter(arr, func);
 console.log(results);
 console.log(Date.now() - time);

@@ -2,7 +2,7 @@ import _     from 'lodash';
 import Iffer from '../lib/iffer';
 
 export default function(path, value, op, iffer_) {
-  if(path === '') {
+  if(!path) {
     if(_.isPlainObject(value)) {
       return _.each(value, (value, path) => {
         this.primitive(path, value, op, iffer);
