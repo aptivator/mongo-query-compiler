@@ -45,8 +45,7 @@ export default class Iffer {
     }
     
     let code = this.current.return();
-    code = `if(${code})`;
-    code += `{return false;}`;
+    code = `if(${code}){return false;}`;
     
     return writer ? writer(code) : code;
   }

@@ -22,7 +22,7 @@ export default (o, path, op, operand, symbolTable, operandName) => {
   let referencingOp = referencerOps[op];
   
   if(referencingOp) {
-    return referencingOp(o, value, operand);
+    return referencingOp(o, loperand, operand);
   }
   
   let primitiveOp = primitiveOps[op];

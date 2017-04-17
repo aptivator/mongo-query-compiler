@@ -1,8 +1,12 @@
-import _      from 'lodash';
+import _ from 'lodash';
 
 export default (loperand, roperand) => {
-  if(_.isArray(loperand) && !_.isObject(roperand)) {
-    return loperand.includes(roperand);
+  for(let i = 0; i < 2; i++) {
+    if(_.isArray(loperand) && !_.isObject(roperand)) {
+      return loperand.includes(roperand);
+    }
+    
+    [loperand, roperand] = [roperand, loperand];
   }
   
   if(_.isRegExp(roperand)) {
