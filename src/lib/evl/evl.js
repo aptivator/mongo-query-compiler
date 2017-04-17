@@ -1,6 +1,7 @@
 import _             from 'lodash';
 import browser       from 'object-browser';
 import arrayOps      from './operations/array/array';
+import freeFormOps   from './operations/free-form/free-form';
 import primitiveOps  from './operations/primitive/primitive';
 import referencerOps from './operations/referencers/referencers';
 
@@ -28,6 +29,12 @@ export default (o, path, op, operand, symbolTable, operandName) => {
   
   if(primitiveOp) {
     return primitiveOp(loperand, operand);
+  }
+  
+  let freeFormOp = freeFormOps[op];
+  
+  if(freeFormOp) {
+    return freeFormOp(o, operand, symbolTable, operandName);
   }
   
   throw new Error(`operator [${op}] is invalid`);

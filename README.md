@@ -23,6 +23,6 @@ npm install --save mongo-query-compiler
 
 ### Utility Operators
 
-### Query Examples
+### Examples
 
 ### Limitations
