@@ -21,7 +21,7 @@ describe('eq', () => {
     expect(results.length).to.be.above(0);
   });
   
-  it('allows nested $ed operator', () => {
+  it('allows nested $eq operator', () => {
     let query = compiler({_id: {$eq: 1}});
     let results = data.filter(query);
     expect(results.length).to.equal(1);

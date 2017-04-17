@@ -22,6 +22,7 @@ export default function(path, query, op, iffer_) {
   
   if(!iffer_) {
     iffer.return(this.writer);
+    //console.log(iffer.return());
   } else {
     iffer.groupClose();
   }

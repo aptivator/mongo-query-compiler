@@ -7,7 +7,11 @@ export default operations => {
       let {exists, value} = loperand;
       
       if(!exists) {
-        return exists;
+        if(!['$ne'].includes(opName)) {
+          return false;
+        }
+        
+        return true;
       }
       
       roperand = referencer(o, roperand);

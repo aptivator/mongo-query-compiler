@@ -1,8 +1,6 @@
 import _ from 'lodash';
 
-export default (operand, options) => {
-  let {value: values} = operand;
-  
+export default (values, options) => {
   if(!_.isArray(options)) {
     throw new Error('[$in and $nin] operators must specify an array of values');
   }
