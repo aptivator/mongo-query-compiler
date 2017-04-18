@@ -1,9 +1,9 @@
-let negation = ['', true];
+let negation = [null, true];
 
 let opParamsMap = {
   $or:  [],
+  $and: [null, false, true],
   $nor: negation,
-  $and: ['', false, true],
   $not: negation
 };
 

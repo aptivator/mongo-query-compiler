@@ -4,12 +4,12 @@ module.exports = [{
   age: 19,
   type: 1,
   status: 'P',
-  favorites: { artist: 'Picasso', food: 'pizza', color: 'black'},
-  finished: [ 17, 3 ],
+  favorites: {artist: 'Picasso', food: 'pizza', color: 'black'},
+  finished: [17, 3],
   badges: ['black', 'blue'],
   points: [
-    { points: 85, bonus: 20 },
-    { points: 85, bonus: 10 }
+    {points: 85, bonus: 20},
+    {points: 85, bonus: 10}
   ]
 }, {
   _id: 2,
@@ -17,12 +17,12 @@ module.exports = [{
   age: 42,
   type: 1,
   status: 'A',
-  favorites: { artist: 'Miro', food: 'meringue' },
-  finished: [ 11, 25 ],
-  badges: [ 'green' ],
+  favorites: {artist: 'Miro', food: 'meringue'},
+  finished: [11, 25],
+  badges: ['green'],
   points: [
-    { points: 85, bonus: 20 },
-    { points: 64, bonus: 12 }
+    {points: 85, bonus: 20},
+    {points: 64, bonus: 12}
   ]
 }, {
   _id: 3,
@@ -30,12 +30,12 @@ module.exports = [{
   age: 22,
   type: 2,
   status: 'A',
-  favorites: { artist: 'Cassatt', food: 'cake' },
-  finished: [ 6 ],
-  badges: [ 'blue', 'red' ],
+  favorites: {artist: 'Cassatt', food: 'cake'},
+  finished: [6],
+  badges: ['blue', 'red'],
   points: [
-    { points: 81, bonus: 8 },
-    { points: 55, bonus: 20 }
+    {points: 81, bonus: 8},
+    {points: 55, bonus: 20}
   ]
 }, {
   _id: 4,
@@ -43,12 +43,12 @@ module.exports = [{
   age: 34,
   type: 2,
   status: 'D',
-  favorites: { artist: 'Chagall', food: 'chocolate' },
-  finished: [ 5, 11 ],
-  badges: [ 'red', 'black' ],
+  favorites: {artist: 'Chagall', food: 'chocolate'},
+  finished: [5, 11],
+  badges: ['red', 'black'],
   points: [
-    { points: 53, bonus: 15 },
-    { points: 51, bonus: 15 }
+    {points: 53, bonus: 15},
+    {points: 51, bonus: 15}
   ]
 }, {
   _id: 5,
@@ -56,11 +56,11 @@ module.exports = [{
   age: 23,
   type: 2,
   status: 'D',
-  favorites: { artist: 'Noguchi', food: 'nougat' },
-  finished: [ 14, 6 ],
-  badges: [ 'orange' ],
+  favorites: {artist: 'Noguchi', food: 'nougat'},
+  finished: [14, 6],
+  badges: ['orange'],
   points: [
-    { points: 71, bonus: 20 }
+    {points: 71, bonus: 20}
   ]
 }, {
   _id: 6,
@@ -68,11 +68,11 @@ module.exports = [{
   age: 43,
   type: 1,
   status: 'A',
-  favorites: { food: 'pizza', artist: 'Picasso' },
-  finished: [ 18, 12 ],
-  badges: [ 'black', 'blue' ],
+  favorites: {food: 'pizza', artist: 'Picasso'},
+  finished: [18, 12],
+  badges: ['black', 'blue'],
   points: [
-    { points: 78, bonus: 8 },
-    { points: 57, bonus: 7 }
+    {points: 78, bonus: 8},
+    {points: 57, bonus: 7}
   ]
 }];
