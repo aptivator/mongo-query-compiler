@@ -1,5 +1,5 @@
 let {expect} = require('chai');
-let data = require('../../fixtures/data');
+let data = require('../../data/data');
 let compiler = require('../../../dist/compiler');
 
 describe('$not', () => {
