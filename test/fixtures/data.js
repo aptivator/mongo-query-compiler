@@ -6,7 +6,7 @@ module.exports = [{
   status: 'P',
   favorites: { artist: 'Picasso', food: 'pizza', color: 'black'},
   finished: [ 17, 3 ],
-  badges: [ 'blue', 'black' ],
+  badges: ['black', 'blue'],
   points: [
     { points: 85, bonus: 20 },
     { points: 85, bonus: 10 }

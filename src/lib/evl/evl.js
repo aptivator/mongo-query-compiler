@@ -16,25 +16,25 @@ export default (o, path, op, operand, symbolTable, operandName) => {
       throw new Error(`[${op}] operation must be applied to an array`);
     }
 
-    return arrayOp(value, operand, symbolTable, operandName);
+    return !arrayOp(value, operand, symbolTable, operandName);
   }
   
   let referencingOp = referencerOps[op];
   
   if(referencingOp) {
-    return referencingOp(o, loperand, operand);
+    return !referencingOp(o, loperand, operand);
   }
   
   let primitiveOp = primitiveOps[op];
   
   if(primitiveOp) {
-    return primitiveOp(loperand, operand);
+    return !primitiveOp(loperand, operand);
   }
   
   let freeFormOp = freeFormOps[op];
   
   if(freeFormOp) {
-    return freeFormOp(o, operand, symbolTable, operandName);
+    return !freeFormOp(o, operand, symbolTable, operandName);
   }
   
   throw new Error(`operator [${op}] is invalid`);

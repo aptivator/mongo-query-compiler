@@ -6,7 +6,7 @@
   "jsnext:main": "dist/compiler.es.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "mocha ./test/tests/**/*.js",
+    "test": "mocha ./test/tests/**/**/*.js ./test/tests/**/*.js",
     "watch": "npm test && run-when-changed --watch \"dist/compiler.js\" --watch \"test/tests/**/*.js\" --exec \"npm test\"",
     "dev": "rollup -c -w & npm run watch"
   },

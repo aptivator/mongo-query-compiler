@@ -1,8 +1,10 @@
+let negation = ['', true];
+
 let opParamsMap = {
-  $or: [null, true, true],
-  $nor: [null, false, true],
-  $and: [null, true],
-  $not: []
+  $or:  [],
+  $nor: negation,
+  $and: ['', false, true],
+  $not: negation
 };
 
 export default op => opParamsMap[op].slice();

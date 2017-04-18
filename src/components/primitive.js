@@ -20,5 +20,5 @@ export default function(path, value, op, iffer_) {
     return iffer.add(condition);
   }
   
-  new Iffer(condition, true).return(this.writer);
+  new Iffer(condition).return(this.writer);
 }

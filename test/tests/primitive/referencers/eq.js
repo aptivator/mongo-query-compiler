@@ -2,7 +2,7 @@ let {expect} = require('chai');
 let data = require('../../../fixtures/data');
 let compiler = require('../../../../dist/compiler');
 
-describe('eq', () => {
+describe('$eq', () => {
   it('performs colon equality', () => {
     let query = compiler({_id: 1});
     let results = data.filter(query);
@@ -44,7 +44,7 @@ describe('eq', () => {
   });
   
   it('supports $ref operator', () => {
-    let query = compiler({favorites: {color: {$eq: {$ref: 'badges.1'}}}});
+    let query = compiler({favorites: {color: {$eq: {$ref: 'badges.0'}}}});
     let results = data.filter(query);
     expect(results.length).to.equal(1);
   });
@@ -56,6 +56,12 @@ describe('eq', () => {
     
     query = compiler({favorites: {color: {$eq: {$ref: 'badges'}}}});
     results = data.filter(query);
+    expect(results.length).to.equal(1);
+  });
+  
+  it('performs regular expression equality', () => {
+    let query = compiler({name: /^s/});
+    let results = data.filter(query);
     expect(results.length).to.equal(1);
   });
 });

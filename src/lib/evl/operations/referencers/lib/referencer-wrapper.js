@@ -7,7 +7,7 @@ export default operations => {
       let {exists, value} = loperand;
       
       if(!exists) {
-        if(!['$ne'].includes(opName)) {
+        if(!['$ne', '$nin'].includes(opName)) {
           return false;
         }
         
