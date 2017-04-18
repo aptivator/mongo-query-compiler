@@ -1,7 +1,7 @@
 import _              from 'lodash';
-import Iffer          from '../lib/iffer';
-import pather         from '../lib/pather';
-import unwindAssessor from '../lib/unwind-assessor';
+import Iffer          from '../../lib/iffer';
+import pather         from '../../lib/pather';
+import unwindAssessor from './lib/unwind-assessor';
 
 export default function(path, query, op, iffer_) {
   if(unwindAssessor(path, query, op)) {

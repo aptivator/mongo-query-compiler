@@ -2,10 +2,10 @@ let {expect} = require('chai');
 let data = require('../../../data/data');
 let compiler = require('../../../../dist/compiler');
 
-describe('$mod', () => {
-  it('performs modulo operation', () => {
-    let query = compiler({$mod: {_id: [2, 0]}});
+describe('$regexp', () => {
+  it('performs regular expression test', () => {
+    let query = compiler({$regexp: {name: /^x/}});
     let results = data.filter(query);
-    expect(results.length).to.equal(3);
+    expect(results.length).to.equal(2);
   });
 });

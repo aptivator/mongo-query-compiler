@@ -3,7 +3,7 @@ import evl        from '../lib/evl/evl';
 import compound   from './compound/compound';
 import datum      from './datum/datum';
 import expression from './expression/expression';
-import primitive  from './primitive';
+import primitive  from './primitive/primitive';
 import writer     from './writer';
 
 function Compiler(query) {
@@ -17,11 +17,8 @@ function Compiler(query) {
   });
   
   this.expression('', query);
-  
   this.writer('return true;');
-  
   let func = new Function('o', 'd', 'evl', this._code);
-  
   return _.partial(func, _, _d, evl);
 }
 
