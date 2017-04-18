@@ -3,6 +3,12 @@ let data = require('../../fixtures/data');
 let compiler = require('../../../dist/compiler');
 
 describe('$not', () => {
+  it('is equivalent to $ne', () => {
+    let query = compiler({_id: {$not: 1}});
+    let results = data.filter(query);
+    expect(results.length).to.equal(5);
+  });
+  
   it('negates primitives', () => {
     let query = compiler({_id: {$not: {$eq: 1}}});
     let results = data.filter(query);

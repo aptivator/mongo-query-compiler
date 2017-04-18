@@ -39,7 +39,7 @@ describe('combined compound operators', () => {
           }
         }
       }
-    });    
+    });
     
     let results = data.filter(query);
     expect(results.length).to.equal(4);

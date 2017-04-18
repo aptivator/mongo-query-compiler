@@ -6,6 +6,10 @@ export default function(path, query, op, iffer_) {
   let ifferParams = ifferParamer(op);
   let iffer = iffer_;
   
+  if(op === '$not' && !_.isPlainObject(query)) {
+    return this.primitive(path, query, '$ne', iffer_);
+  }
+  
   if(!iffer) {
     iffer = new Iffer(...ifferParams);
   } else {
@@ -22,7 +26,6 @@ export default function(path, query, op, iffer_) {
   
   if(!iffer_) {
     iffer.return(this.writer);
-    //console.log(iffer.return());
   } else {
     iffer.groupClose();
   }
