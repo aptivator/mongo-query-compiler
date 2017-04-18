@@ -119,14 +119,50 @@ let results = records.filter(query);
 //results = [{name: 'Vladimir', age: 55, married: true}]
 ```
 
-#### *Primitive Operators (that support $ref property)*
+#### *Primitive Operators (with $ref support)*
+
+##### $eq
+
+##### $ne
+
+##### $gt
+
+##### $gte
+
+##### $lt
+
+##### $lte
+
+##### $in
+
+##### $nin
 
 #### *Array Operators*
 
+##### $all
+
+##### $size
+
+##### $elemMatch
+
 #### *Free-form Operators*
+
+##### $where
 
 #### *Compound Operators*
 
+##### $and
+
+##### $or
+
+##### $nor
+
+##### $not
+
 #### *Utility Operators*
 
-### Limitations
+##### $flatten
+
+### Limitations and Caveats
+
+performance and grammar
