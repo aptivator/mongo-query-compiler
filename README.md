@@ -21,9 +21,10 @@ npm install --save mongo-query-compiler
 
 #### *Primitive Operators*
 
-* **$exists** - assesses existence of an object element.  **Note:** object element
-  existence is tested by checking if object keys include the assessed element's 
-  name.
+##### $exists 
+  
+Assesses existence of an object element.  **Note:** object element existence is 
+tested by checking if object keys include the assessed element's name.
 
 ```javascript
 import compiler from 'mongo-query-compiler';
@@ -67,8 +68,10 @@ let results = records.filter(query);
 The above approach may be used with any primitive operator (*with some 
 exceptions that will be noted appropriately*).
 
-* **$mod** - performs modulo operation on an object element.  The operation's
-  configuration is an array consisting of divisor and remainder (in that order).
+##### $mod
+
+Performs modulo operation on an object element.  The operation's configuration 
+is an array consisting of divisor and remainder (in that order).
 
 ```javascript
 let records = [
@@ -81,7 +84,9 @@ let results = records.filter(query);
 //results = [{name: 'Igor', yearBorn: 1960}]
 ```
 
-* **$regexp** - determines if an element fulfills a regular expression.
+##### $regexp
+
+Determines if an element fulfills a regular expression.
 
 ```javascript
 let records = [
@@ -94,12 +99,14 @@ let results = records.filter(query);
 //results = [{name: 'Vasiliy'}]
 ```
 
-* **$type** - checks if an assessed element is of a certain type.  **Note:** 
-  `mongo-query-compiler` uses `lodash`'s `is` family of functions to determine
-  types.  To specify a type simply list a name of one of the `is` functions 
-  without the `is`.  For example, `lodash` has `isNumber`, `isInteger`, and 
-  `isString` methods.  The types that these support are `number`, `integer`, and
-  `string`, respectively.
+##### $type
+
+Checks if an assessed element is of a certain type.  **Note:** 
+`mongo-query-compiler` uses `lodash`'s `is` family of functions to determine 
+types.  To specify a type simply list a name of one of the `is` functions 
+without the `is`.  For example, `lodash` has `isNumber`, `isInteger`, and 
+`isString` methods.  The types that these support are `number`, `integer`, and
+`string`, respectively.
 
 ```javascript
 let records = [
