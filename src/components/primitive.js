@@ -1,14 +1,17 @@
-import _     from 'lodash';
-import Iffer from '../lib/iffer';
+import _              from 'lodash';
+import Iffer          from '../lib/iffer';
+import pather         from '../lib/pather';
+import unwindAssessor from '../lib/unwind-assessor';
 
 export default function(path, query, op, iffer_) {
+  if(unwindAssessor(path, query, op)) {
+    return _.each(query, (query, path_) => {
+      path_ = pather(path, path_);
+      this.primitive(path_, query, op, iffer);
+    });
+  }
+
   if(!path) {
-    if(_.isPlainObject(query)) {
-      return _.each(query, (query, path) => {
-        this.primitive(path, query, op, iffer);
-      });
-    }
-    
     path = '__self';
   }
   
