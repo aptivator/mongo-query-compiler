@@ -13,8 +13,8 @@ export default function(path, value, op, iffer_) {
   }
   
   let iffer = iffer_;
-  let [var_, tablePath] = this.datum(value);
-  let condition = `evl(o, '${path}', '${op}', ${tablePath}, d, '${var_}')`;
+  let symbolName = this.datum(value);
+  let condition = `evl(o, '${path}', '${op}', d.${symbolName}, d, '${symbolName}')`;
   
   if(iffer) {
     return iffer.add(condition);
