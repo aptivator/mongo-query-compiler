@@ -1,4 +1,3 @@
-let _ = require('lodash');
 let {expect} = require('chai');
 let data = require('../../../data/data');
 let compiler = require('../../../../dist/compiler');

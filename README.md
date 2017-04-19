@@ -526,6 +526,11 @@ and `object-browser` are given to `$where()` as parameteres.
 
 Controls behavior of `object-browser` when accessing objects nested in an array.
 
-### Limitations and Caveats
+### Conclusion
 
+For performance reasons, it is recommended that the query functions be prebuilt
+rather than compiled every time an array is filtered.
 
+Please also note that the grammar implemented by `mongo-query-compiler` is 
+different from mongodb query grammar and a developer is encouraged to consult
+this document to be aware of the differences between the two implementations.
