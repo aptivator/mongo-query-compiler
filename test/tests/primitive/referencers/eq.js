@@ -1,3 +1,4 @@
+let _ = require('lodash');
 let {expect} = require('chai');
 let data = require('../../../data/data');
 let compiler = require('../../../../dist/compiler');
@@ -72,20 +73,20 @@ describe('$eq', () => {
   });
   
   it('some test', () => {
-let records = [{
-  name: 'Ivan',
-  cars: [
-    {brand: 'toyota', model: 'camry', year: 2008},
-    {brand: 'nissan', model: 'sentra', year: 2010}
-  ]
-}, {
-  name: 'Charlie',
-  cars: [
-    {brand: 'acura', model: 'tl', year: 2015}
-  ]
-}];
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 10]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
 
-let query = compiler({'cars.brand': 'toyota'});
+let query = compiler({
+  $where(o, browser) {
+    let {timeSheet} = this;
+    let sum = _.reduce(timeSheet, (sum, hours) => sum += hours);
+    return sum < 40;
+  }
+});
+
 let results = records.filter(query);
 console.log(results);
   })
