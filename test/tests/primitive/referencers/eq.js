@@ -71,23 +71,4 @@ describe('$eq', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(1);
   });
-  
-  it('some test', () => {
-let records = [
-  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
-  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 10]},
-  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
-];
-
-let query = compiler({
-  $where(o, browser) {
-    let {timeSheet} = this;
-    let sum = _.reduce(timeSheet, (sum, hours) => sum += hours);
-    return sum < 40;
-  }
-});
-
-let results = records.filter(query);
-console.log(results);
-  })
 });

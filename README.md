@@ -465,7 +465,7 @@ receives either a string expression or a full JavaScript function to run against
 each document in a collection.
 
 ```javascript
-/* string $where expression */
+/* $where as string expression */
 
 let records = [
   {lastName: 'Johnson', maidenName: null},
@@ -478,9 +478,9 @@ let results = records.filter(query);
 //results = [{lastName: 'Smith', maidenName: 'Smith'}]
 ```
 
-**Note:** `this` refers to an object in the collection.  MongoDB also uses `obj`
-to refer to a document to which a `$where` query is applied.  `mongo-query-compiler`
-supports only `this`.
+**Note:** `this` refers to a current object in the collection.  MongoDB also 
+uses `obj` to refer to a document to which a `$where` query is applied.  
+`mongo-query-compiler` supports only `this` keyword.
 
 ```javascript
 /* $where as function */
@@ -522,8 +522,10 @@ and `object-browser` are given to `$where()` as parameteres.
 
 ### *Utility Operators*
 
-#### $flatten
+#### $flatten *(currently under development)*
+
+Controls behavior of `object-browser` when accessing objects nested in an array.
 
 ### Limitations and Caveats
 
-performance and grammar
+

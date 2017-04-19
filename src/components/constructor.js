@@ -8,12 +8,11 @@ import writer     from './writer';
 
 function Compiler(query) {
   let _d = {};
-  let {writer} = this;
   
   _.extend(this, {
     _code: '', 
     _d, 
-    writer: writer.bind(this)
+    writer: this.writer.bind(this)
   });
   
   this.expression('', query);
