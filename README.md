@@ -346,7 +346,7 @@ let results = records.filter(query);
 ##### Primitive operations and object element's existence
 
 It is important to note that all non-negating primitive operations (e.g., `$eq`, 
-`$lt`) will automatically return `false` if an object element does not exist.  
+`$lt`) will automatically return `false` if an object element does not exist.
 All negating primitive operations (i.e., `$ne` and `$nin`) will automatically 
 return `true` if an object element does not exist.
 
