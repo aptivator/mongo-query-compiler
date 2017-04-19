@@ -528,6 +528,17 @@ and `object-browser` are given to `$where()` as parameteres.
 
 Allows for comments to be added to queries.
 
+```javascript
+let query = {
+  $comment: 'Find employees who worked less than 40 hours',
+  $where(o, browser) {
+    let {timeSheet} = this;
+    let sum = timeSheet.reduce((sum, hours) => sum += hours);
+    return sum < 40;
+  }
+};
+```
+
 #### $flatten *(currently under development)*
 
 Controls behavior of `object-browser` when accessing objects nested in an array.
