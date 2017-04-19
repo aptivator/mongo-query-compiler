@@ -572,7 +572,7 @@ let records = [
   {name: 'Stuart', yearBorn: 1970}
 ];
 
-let query = compiler({yearBorn: {$and: [{$gt: 1970}, {$mode: [4, 0}]}});
+let query = compiler({yearBorn: {$and: [{$gt: 1970}, {$mod: [4, 0]}]}});
 let results = records.filter(query);
 //results = [{name: 'Bill', yearBorn: 1980}]
 ```
