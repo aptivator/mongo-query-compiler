@@ -19,9 +19,9 @@ npm install --save mongo-query-compiler
 
 ### Documentation and Examples
 
-#### *Primitive Operators*
+### *Primitive Operators*
 
-##### $exists
+#### $exists
   
 Assesses existence of an object element.  **Note:** object element existence is 
 tested by checking if object keys include the assessed element's name.
@@ -68,7 +68,7 @@ let results = records.filter(query);
 The above approach may be used with any primitive operator (*with some 
 exceptions that will be noted appropriately*).
 
-##### $mod
+#### $mod
 
 Performs modulo operation on an object element.  The operation's configuration 
 is an array consisting of divisor and remainder (in that order).
@@ -84,7 +84,7 @@ let results = records.filter(query);
 //results = [{name: 'Igor', yearBorn: 1960}]
 ```
 
-##### $regexp
+#### $regexp
 
 Determines if an element fulfills a regular expression.
 
@@ -99,7 +99,7 @@ let results = records.filter(query);
 //results = [{name: 'Vasiliy'}]
 ```
 
-##### $type
+#### $type
 
 Checks if an assessed element is of a certain type.  **Note:** 
 `mongo-query-compiler` uses `lodash`'s `is` family of functions to determine 
@@ -119,7 +119,7 @@ let results = records.filter(query);
 //results = [{name: 'Vladimir', age: 55, married: true}]
 ```
 
-##### Implicit equality
+#### Implicit equality
 
 Determines equality of an object element against a primitive value, a regular
 expression, or an array.  To test object element's (deep) equality against some 
@@ -179,9 +179,9 @@ let results = records.filter(query);
 //results = [{name: 'Elena', ... }]
 ```
 
-#### *Primitive Operators (with $ref support)*
+### *Primitive Operators (with $ref support)*
 
-##### $eq
+#### $eq
 
 Supports all of the implicit equality operations, deep equality, and reference
 ($ref) equality.  Unlike other primitive operators, $eq does not unwind an 
@@ -229,7 +229,7 @@ let results = records.filter(query);
 
 **Note:** `$ref` operator is not supported by mongodb.
 
-##### $ne
+#### $ne
 
 Checks for inequality and is the reverse of `$eq` operator.
 
@@ -245,7 +245,7 @@ let results = records.filter(query);
 //results = [{lastName: 'Johnson', ... }, {lastName: 'Jones', ... }]
 ```
 
-##### $gt
+#### $gt
 
 Diagnoses if an object element's value is greater than a comparator.
 
@@ -261,7 +261,7 @@ let results = records.filter(query);
 //results = [{name: 'Sarah', age: 35}]
 ```
 
-##### $gte
+#### $gte
 
 Determines if an object element's value is greater than or equal to a comparator.
 
@@ -277,7 +277,7 @@ let results = records.filter(query);
 //results = [{name: 'Bill', age: 30}, {name: 'Sarah', age: 35}]
 ```
 
-##### $lt
+#### $lt
 
 Assesses if an object element's value is less than a comparator.
 
@@ -293,7 +293,7 @@ let results = records.filter(query);
 //results = [{name: 'John', age: 17}]
 ```
 
-##### $lte
+#### $lte
 
 Tests if an object element's value is less than or equal to a comparator.
 
@@ -309,7 +309,7 @@ let results = records.filter(query);
 //results = [{name: 'Bill', age: 30}, {name: 'John', age: 17}]
 ```
 
-##### $in
+#### $in
 
 Evaluates if an object element's value is included in an array of test values.
 If an element's value is an array, then `mongo-query-compiler` will determine if 
@@ -327,7 +327,7 @@ let results = records.filter(query);
 //results = [{name: 'Bill', ... }, {name: 'Sarah', ... }]
 ```
 
-##### $nin
+#### $nin
 
 Reverse of the `$in` operator.
 
@@ -343,40 +343,40 @@ let results = records.filter(query);
 //results = [{name: 'John', car: 'volvo'}]
 ```
 
-##### Primitive operations and object element's existence
+#### Primitive operations and object element's existence
 
 It is important to note that all non-negating primitive operations (e.g., `$eq`, 
 `$lt`) will automatically return `false` if an object element does not exist.
 All negating primitive operations (i.e., `$ne` and `$nin`) will automatically 
 return `true` if an object element does not exist.
 
-#### *Array Operators*
+### *Array Operators*
 
-##### $all
+#### $all
 
-##### $size
+#### $size
 
-##### $elemMatch
+#### $elemMatch
 
-#### *Free-form Operators*
+### *Free-form Operators*
 
-##### $where
+#### $where
 
-#### *Compound Operators*
+### *Compound Operators*
 
-##### Implicit $and
+#### Implicit $and
 
-##### $and
+#### $and
 
-##### $or
+#### $or
 
-##### $nor
+#### $nor
 
-##### $not
+#### $not
 
-#### *Utility Operators*
+### *Utility Operators*
 
-##### $flatten
+#### $flatten
 
 ### Limitations and Caveats
 
