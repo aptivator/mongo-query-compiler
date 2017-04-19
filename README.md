@@ -512,11 +512,74 @@ and `object-browser` are given to `$where()` as parameteres.
 
 #### Implicit $and
 
+Asserts whether multiple conditions are all satisfied.  A fundamental way to 
+specify multiple criteria is to list them in the same query.
 
+```javascript
+let records = [{
+  name: 'Elena',
+  favorite: {
+    food: 'chocolate',
+    music: 'trance'
+  }
+}, {
+  name: 'Boris',
+  favorite: {
+    food: 'chocolate'
+  }
+}];
+
+let query = compiler({favorite: {food: /^cho/, music: {$exists: false}}});
+let results = records.filter(query);
+//results = [{name: 'Boris', ... }]
+```
 
 #### $and
 
+Determines if several criteria listed within the `$and` clause are all fulfilled.
+`mongo-query-compiler`, unlike mongodb, allows `$and` query to be specified as
+either an object of queries or an array of queries.
+
+```javascript
+/* $and as an object of queries */
+
+let records = [{
+  name: 'Ivan',
+  age: 27,
+  cars: [
+    {brand: 'toyota', model: 'camry', year: 2008},
+    {brand: 'nissan', model: 'sentra', year: 2010}
+  ]
+}, {
+  name: 'Charlie',
+  age: 57,
+  cars: [
+    {brand: 'acura', model: 'tl', year: 2015}
+  ]
+}];
+
+let query = compiler({$and: {age: {$gt: 30}, cars: {brand: {$eq: /^acu/}}}});
+let results = records.filter(query);
+//results = [{name: 'Charlie', ... }]
+```
+
+```javascript
+/* $and as an array of queries */
+
+let records = [
+  {name: 'Bill', yearBorn: 1980},
+  {name: 'Joane', yearBorn: 1981},
+  {name: 'Stuart', yearBorn: 1970}
+];
+
+let query = compiler({yearBorn: {$and: [{$gt: 1970}, {$mode: [4, 0}]}});
+let results = records.filter(query);
+//results = [{name: 'Bill', yearBorn: 1980}]
+```
+
 #### $or
+
+
 
 #### $nor
 
@@ -539,7 +602,7 @@ let query = {
 };
 ```
 
-#### $flatten *(currently under development)*
+#### $flatten *(under development)*
 
 Controls behavior of `object-browser` when accessing objects nested in an array.
 
