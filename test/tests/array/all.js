@@ -9,8 +9,9 @@ describe('$all', () => {
     expect(results.length).to.equal(3);
   });
   
-  it('throws an error if the operation is requested on an non-array type', () => {
-    let query = compiler({_id: {$all: [1]}});
-    expect(() => data.filter(query)).to.throw(/applied to an array/);
+  it('converts non-array values and options into arrays', () => {
+    let query = compiler({_id: {$all: 1}});
+    let results = data.filter(query);
+    expect(results.length).to.equal(1);
   });
 });

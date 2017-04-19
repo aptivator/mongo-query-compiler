@@ -72,13 +72,20 @@ describe('$eq', () => {
   });
   
   it('some test', () => {
-let records = [
-  {name: 'Bill', car: ['toyota', 'jeep']},
-  {name: 'Sarah', car: 'lexus'},
-  {name: 'John', car: 'volvo'}
-];
+let records = [{
+  name: 'Ivan',
+  cars: [
+    {brand: 'toyota', model: 'camry', year: 2008},
+    {brand: 'nissan', model: 'sentra', year: 2010}
+  ]
+}, {
+  name: 'Charlie',
+  cars: [
+    {brand: 'acura', model: 'tl', year: 2015}
+  ]
+}];
 
-let query = compiler({car: {$nin: ['toyota', 'lexus', 'jeep']}});
+let query = compiler({'cars.brand': 'toyota'});
 let results = records.filter(query);
 console.log(results);
   })

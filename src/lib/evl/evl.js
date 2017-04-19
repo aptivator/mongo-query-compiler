@@ -13,7 +13,7 @@ export default (o, path, op, operand, symbolTable, operandName) => {
   
   if(arrayOp) {
     if(!_.isArray(value)) {
-      throw new Error(`[${op}] operation must be applied to an array`);
+      value = [value];
     }
 
     return !arrayOp(value, operand, symbolTable, operandName);
