@@ -21,7 +21,7 @@ npm install --save mongo-query-compiler
 
 #### *Primitive Operators*
 
-##### $exists 
+##### $exists
   
 Assesses existence of an object element.  **Note:** object element existence is 
 tested by checking if object keys include the assessed element's name.
@@ -119,23 +119,236 @@ let results = records.filter(query);
 //results = [{name: 'Vladimir', age: 55, married: true}]
 ```
 
+##### Implicit equality
+
+Determines equality of an object element against a primitive value, a regular
+expression, or an array.  To test object element's (deep) equality against some 
+object, use `$eq` operator.
+
+```javascript
+let records = [{
+  name: 'Elena',
+  favorite: {
+    food: 'chocolate',
+    music: 'trance',
+    books: ['Dune', 'Fountainhead']
+  }
+}];
+
+let query = compiler({name: 'Elena'});
+let results = records.filter(query);
+//results = [{name: 'Elena', ... }]
+```
+
+To test equality of a nested element, specify access to it using a sub-object
+or dot notation.
+
+```javascript
+/* sub-object notation */
+
+let query = compiler({favorite: {food: /^cho/}});
+let results = records.filter(query);
+//results = [{name: 'Elena', ... }]
+```
+
+```javascript
+/* dot notation */
+
+let query = compiler({'favorite.music': 'trance'});
+let results = records.filter(query);
+//results = [{name: 'Elena', ... }]
+```
+
+If an object element is an array, then equality is asserted if a comparison 
+value equals to the array or a comparison value equals to one of the array's 
+values.
+
+```javascript
+/* array to array equality */
+
+let query = compiler({'favorite.books': ['Dune', 'Fountainhead']});
+let results = records.filter(query);
+//results = [{name: 'Elena', ... }]
+```
+
+```javascript
+/* array to value equality */
+
+let query = compiler({'favorite.books': 'Dune'});
+let results = records.filter(query);
+//results = [{name: 'Elena', ... }]
+```
+
 #### *Primitive Operators (with $ref support)*
 
 ##### $eq
 
+Supports all of the implicit equality operations, deep equality, and reference
+($ref) equality.  Unlike other primitive operators, $eq does not unwind an 
+object that follows it.  Instead, the value object will be used to assess deep 
+equality.
+
+```javascript
+/* deep equality */
+
+let records = [{
+  name: 'Elena',
+  favorite: {
+    food: 'chocolate',
+    music: 'trance'
+  }
+}, {
+  name: 'Boris',
+  favorite: {
+    food: 'chocolate'
+  }
+}];
+
+let query = compiler({favorite: {$eq: {food: 'chocolate'}}});
+let results = records.filter(query);
+//results = [{name: 'Boris', ... }]
+```
+
+Instead of specifying a comparator value, a reference may be used, which is an 
+address to one of the object's elements.  Reference inclusion is supported for 
+all the primitive operators listed in this section: `$gt`, `$gte`, etc.
+
+```javascript
+/* reference equality */
+
+let records = [
+  {lastName: 'Johnson', maidenName: null},
+  {lastName: 'Jones', maidenName: 'Clarkson'},
+  {lastName: 'Smith', maidenName: 'Smith'}
+];
+
+let query = compiler({lastName: {$eq: {$ref: 'maidenName'}}});
+let results = records.filter(query);
+//results = [{lastName: 'Smith', maidenName: 'Smith'}]
+```
+
+**Note:** `$ref` operator is not supported by mongodb.
+
 ##### $ne
+
+Checks for inequality and is the reverse of `$eq` operator.
+
+```javascript
+let records = [
+  {lastName: 'Johnson', maidenName: null},
+  {lastName: 'Jones', maidenName: 'Clarkson'},
+  {lastName: 'Smith', maidenName: 'Smith'}
+];
+
+let query = compiler({lastName: {$ne: {$ref: 'maidenName'}}});
+let results = records.filter(query);
+//results = [{lastName: 'Johnson', ... }, {lastName: 'Jones', ... }]
+```
 
 ##### $gt
 
+Diagnoses if an object element's value is greater than a comparator.
+
+```javascript
+let records = [
+  {name: 'Bill', age: 30},
+  {name: 'Sarah', age: 35},
+  {name: 'John', age: 17}
+];
+
+let query = compiler({age: {$gt: 30}});
+let results = records.filter(query);
+//results = [{name: 'Sarah', age: 35}]
+```
+
 ##### $gte
+
+Determines if an object element's value is greater than or equal to a comparator.
+
+```javascript
+let records = [
+  {name: 'Bill', age: 30},
+  {name: 'Sarah', age: 35},
+  {name: 'John', age: 17}
+];
+
+let query = compiler({age: {$gte: 30}});
+let results = records.filter(query);
+//results = [{name: 'Bill', age: 30}, {name: 'Sarah', age: 35}]
+```
 
 ##### $lt
 
+Assesses if an object element's value is less than a comparator.
+
+```javascript
+let records = [
+  {name: 'Bill', age: 30},
+  {name: 'Sarah', age: 35},
+  {name: 'John', age: 17}
+];
+
+let query = compiler({age: {$lt: 18}});
+let results = records.filter(query);
+//results = [{name: 'John', age: 17}]
+```
+
 ##### $lte
+
+Tests if an object element's value is less than or equal to a comparator.
+
+```javascript
+let records = [
+  {name: 'Bill', age: 30},
+  {name: 'Sarah', age: 35},
+  {name: 'John', age: 17}
+];
+
+let query = compiler({age: {$lte: 30}});
+let results = records.filter(query);
+//results = [{name: 'Bill', age: 30}, {name: 'John', age: 17}]
+```
 
 ##### $in
 
+Evaluates if an object element's value is included in an array of test values.
+If an element's value is an array, then `mongo-query-compiler` will determine if 
+the array is a subset of the test values.
+
+```javascript
+let records = [
+  {name: 'Bill', car: ['toyota', 'jeep']},
+  {name: 'Sarah', car: 'lexus'},
+  {name: 'John', car: 'volvo'}
+];
+
+let query = compiler({car: {$in: ['toyota', 'lexus', 'jeep']}});
+let results = records.filter(query);
+//results = [{name: 'Bill', ... }, {name: 'Sarah', ... }]
+```
+
 ##### $nin
+
+Reverse of the `$in` operator.
+
+```javascript
+let records = [
+  {name: 'Bill', car: ['toyota', 'jeep']},
+  {name: 'Sarah', car: 'lexus'},
+  {name: 'John', car: 'volvo'}
+];
+
+let query = compiler({car: {$nin: ['toyota', 'lexus', 'jeep']}});
+let results = records.filter(query);
+//results = [{name: 'John', car: 'volvo'}]
+```
+
+##### Primitive operations and object element's existence
+
+It is important to note that all non-negating primitive operations (e.g., `$eq`, 
+`$lt`) will automatically return `false` if an object element does not exist.  
+All negating primitive operations (i.e., `$ne` and `$nin`) will automatically 
+return `true` if an object element does not exist.
 
 #### *Array Operators*
 
@@ -150,6 +363,8 @@ let results = records.filter(query);
 ##### $where
 
 #### *Compound Operators*
+
+##### Implicit $and
 
 ##### $and
 

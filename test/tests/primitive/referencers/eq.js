@@ -64,4 +64,22 @@ describe('$eq', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(1);
   });
+  
+  it('conducts deep array equality', () => {
+    let query = compiler({finished: [17, 3]});
+    let results = data.filter(query);
+    expect(results.length).to.equal(1);
+  });
+  
+  it('some test', () => {
+let records = [
+  {name: 'Bill', car: ['toyota', 'jeep']},
+  {name: 'Sarah', car: 'lexus'},
+  {name: 'John', car: 'volvo'}
+];
+
+let query = compiler({car: {$nin: ['toyota', 'lexus', 'jeep']}});
+let results = records.filter(query);
+console.log(results);
+  })
 });
