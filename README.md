@@ -494,7 +494,7 @@ let records = [
 let query = compiler({
   $where(o, browser) {
     let {timeSheet} = this;
-    let sum = _.reduce(timeSheet, (sum, hours) => sum += hours);
+    let sum = timeSheet.reduce((sum, hours) => sum += hours);
     return sum < 40;
   }
 });
