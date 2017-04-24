@@ -21,6 +21,9 @@ export default function(path, query, op, iffer_) {
       this.expression(path, operand, iffer);
     });
   } else {
+    if(op === '$or') {
+      console.log(path, query, iffer);
+    }
     this.expression(path, query, iffer);
   }
   
