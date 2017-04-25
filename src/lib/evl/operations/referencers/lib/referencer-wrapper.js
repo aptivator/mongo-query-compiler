@@ -1,5 +1,5 @@
-import _          from 'lodash';
-import referencer from './referencer';
+import _       from 'lodash';
+import browser from 'object-browser';
 
 export default operations => {
   return _.reduce(operations, (operations, op, opName) => {
@@ -14,7 +14,13 @@ export default operations => {
         return true;
       }
       
-      roperand = referencer(o, roperand);
+      if(_.isPlainObject(roperand)) {
+        let {$ref} = roperand;
+        if($ref) {
+          roperand = browser(o, $ref);
+        }
+      }
+
       return op(value, roperand);
     };
     return operations;

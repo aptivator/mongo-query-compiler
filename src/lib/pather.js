@@ -1,1 +1,11 @@
-export default (parent, child) => parent ? `${parent}.${child}` : child;
+export default (parent, child) => {
+  if(!parent) {
+    return child;
+  }
+  
+  if(!child) {
+    return parent;
+  }
+  
+  return parent + '.' + child;
+};
