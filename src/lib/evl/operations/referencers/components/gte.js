@@ -1,3 +1,3 @@
-import _ from 'lodash';
+import arrayComparator from '../lib/array-comparator';
 
-export default _.gte;
+export default arrayComparator('gte');

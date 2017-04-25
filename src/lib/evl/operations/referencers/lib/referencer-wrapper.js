@@ -23,6 +23,7 @@ export default operations => {
 
       return op(value, roperand);
     };
+    
     return operations;
   }, operations);  
 };

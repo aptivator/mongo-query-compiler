@@ -538,7 +538,7 @@ let results = records.filter(query);
 
 Determines if several criteria listed within the `$and` clause are all fulfilled.
 `mongo-query-compiler`, unlike mongodb, allows `$and` query to be specified as
-either an object of queries or an array of queries.
+either an object or an array of queries.
 
 ```javascript
 /* $and as an object of queries */
@@ -579,7 +579,18 @@ let results = records.filter(query);
 
 #### $or
 
+Tests if at least one of the criteria is met.  Like `$and`, `$or` query can be
+specified as an object or an array of queries.
 
+```javascript
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 10]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
+
+let query = 
+```
 
 #### $nor
 
@@ -605,6 +616,10 @@ let query = {
 #### $flatten *(under development)*
 
 Controls behavior of `object-browser` when accessing objects nested in an array.
+
+### Order of precendence for compound versus primitive operators
+
+### Query namespacing
 
 ### Conclusion
 
