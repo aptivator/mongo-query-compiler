@@ -1,9 +1,9 @@
 import _          from 'lodash';
 import evl        from '../lib/evl/evl';
-import compound   from './compound/compound';
 import datum      from './datum/datum';
 import expression from './expression/expression';
 import elemental  from './elemental/elemental';
+import logical    from './logical/logical';
 import writer     from './writer';
 
 function Compiler(query) {
@@ -21,6 +21,6 @@ function Compiler(query) {
   return _.partial(func, _, _d, evl);
 }
 
-_.extend(Compiler.prototype, {compound, datum, expression, elemental, writer});
+_.extend(Compiler.prototype, {datum, expression, elemental, logical, writer});
 
 export default Compiler;
