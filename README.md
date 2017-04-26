@@ -247,9 +247,14 @@ let results = records.filter(query);
 
 #### $gt
 
-Diagnoses if an object element's value is greater than a comparator.
+Diagnoses if an object element's value is greater than a comparator.  **Note:**
+for all comparison operators ($gt, $gte, $lt, $lte), an object element's value
+can be an array.  A search criterion will be deemed satisfied if one of the 
+array's values matches a comparison.
 
 ```javascript
+/* comparison against a primitive object element's value */
+
 let records = [
   {name: 'Bill', age: 30},
   {name: 'Sarah', age: 35},
@@ -259,6 +264,19 @@ let records = [
 let query = compiler({age: {$gt: 30}});
 let results = records.filter(query);
 //results = [{name: 'Sarah', age: 35}]
+```
+```javascript
+/* comparison against an array object element's value */ 
+
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 10]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
+
+let query = compiler({timeSheet: {$gt: 9.9}});
+let results = records.filter(query);
+//results = [{name: 'Joane', ... }]
 ```
 
 #### $gte
@@ -585,16 +603,63 @@ specified as an object or an array of queries.
 ```javascript
 let records = [
   {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
-  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 10]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 8]},
   {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
 ];
 
-let query = 
+let query = compiler({timeSheet: {$or: {$lte: 7, $gte: 8.5}}});
+let results = records.filter(query);
+//results = [{name: 'Bill', ... }, {name: 'Stuart', ... }]
 ```
 
 #### $nor
 
+Asserts that all of the specified criteria do not apply to a document.
+
+```javascript
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 8]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
+
+let query = compiler({timeSheet: {$nor: {$lte: 7, $gte: 8.5}}});
+let results = records.filter(query);
+//results = [{name: 'Joane', ... }]
+```
+
 #### $not
+
+Negates a criterion.  Semantically, `$not` is meant to negate one condition at a 
+time.  Specifying multiple criteria is allowed.  In the latter case, `$not` 
+behaves as `$nor`.
+
+```javascript
+/* $not as a negator of a single condition */
+
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 8]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
+
+let query = compiler({timeSheet: {$not: {$or: {$lte: 7, $gte: 8.5}}}});
+let results = records.filter(query);
+//results = [{name: 'Joane', ... }]
+```
+```javascript
+/* $not as alias for $nor */
+
+let records = [
+  {name: 'Bill', timeSheet: [8, 8.5, 8.1, 8, 8]},
+  {name: 'Joane', timeSheet: [7.9, 8, 8, 8.2, 8]},
+  {name: 'Stuart', timeSheet: [7.5, 7, 8, 8, 8.2]}
+];
+
+let query = compiler({timeSheet: {$not: {$lte: 7, $gte: 8.5}}});
+let results = records.filter(query);
+//results = [{name: 'Joane', ... }]
+```
 
 ### *Utility Operators*
 
@@ -617,9 +682,38 @@ let query = {
 
 Controls behavior of `object-browser` when accessing objects nested in an array.
 
-### Order of precendence for compound versus primitive operators
+### Operators' orders of precedence
+
+Compound operator queries can include any and all operators within them.  
+Primitive operator queries can include only query specification and access path
+to an object element's value.  Compound or primitive query can be nested within 
+a compound query.  No query may be nested within a primitive query.
 
 ### Query namespacing
+
+Grammar used by `mongo-query-compiler` allows namespacing access to object
+elements.  
+
+```javascript
+let records = [{
+  name: 'Ivan',
+  age: 27,
+  cars: [
+    {brand: 'toyota', model: 'camry', year: 2008},
+    {brand: 'nissan', model: 'sentra', year: 2010}
+  ]
+}, {
+  name: 'Charlie',
+  age: 57,
+  cars: [
+    {brand: 'acura', model: 'tl', year: 2015}
+  ]
+}];
+
+let query = compiler({cars: {brand: 'toyota', year: {$or: {'': 2008, $eq: 2009}}}});
+let results = records.filter(query);
+//results = [{name: 'Ivan', ... }]
+```
 
 ### Conclusion
 

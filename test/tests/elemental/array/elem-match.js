@@ -1,6 +1,6 @@
 let {expect} = require('chai');
-let data = require('../../data/data');
-let compiler = require('../../../dist/compiler');
+let data = require('../../../data/data');
+let compiler = require('../../../../dist/compiler');
 
 describe('$elemMatch', () => {
   it(`performs a nested query on an array of primitives`, () => {

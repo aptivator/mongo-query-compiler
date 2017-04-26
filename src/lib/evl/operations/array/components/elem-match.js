@@ -1,7 +1,7 @@
 import _        from 'lodash';
 import compiler from '../../../../../compiler';
 
-export default (array, filterer, symbolTable, symbolName) => {
+export default (array, filterer, exists, o, symbolTable, symbolName) => {
   if(!_.isFunction(filterer)) {
     filterer = compiler(filterer);
     symbolTable[symbolName] = filterer;

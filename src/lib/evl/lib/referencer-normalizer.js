@@ -3,9 +3,7 @@ import browser from 'object-browser';
 
 export default operations => {
   return _.reduce(operations, (operations, op, opName) => {
-    operations[opName] = (o, loperand, roperand) => {
-      let {exists, value} = loperand;
-      
+    operations[opName] = (value, testValue, exists, o, symbolTable, symbolName) => {
       if(!exists) {
         if(!['$ne', '$nin'].includes(opName)) {
           return false;
@@ -14,16 +12,16 @@ export default operations => {
         return true;
       }
       
-      if(_.isPlainObject(roperand)) {
-        let {$ref} = roperand;
+      if(_.isPlainObject(testValue)) {
+        let {$ref} = testValue;
         if($ref) {
-          roperand = browser(o, $ref);
+          testValue = browser(o, $ref);
         }
       }
 
-      return op(value, roperand);
+      return op(value, testValue, exists, o, symbolTable, symbolName);
     };
     
     return operations;
-  }, operations);  
+  }, {});  
 };

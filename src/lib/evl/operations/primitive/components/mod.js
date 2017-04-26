@@ -1,14 +1,15 @@
 import _ from 'lodash';
 
-export default (operand, mod) => {
-  if(!_.isArray(mod) || mod.length !== 2) {
-    throw new Error('modulo configuration should be a two-element array');
+export default (value, testValue) => {
+  if(!_.isArray(testValue)) {
+    testValue = [testValue];
   }
   
-  if(!_.isNumber(mod[0]) || !_.isNumber(mod[1])) {
+  let [divisor, remainder] = testValue;
+  
+  if(!_.isNumber(divisor) || !_.isNumber(remainder)) {
     throw new Error('divisor and remainder should be numbers');
   }
   
-  let [divisor, remainder] = mod;
-  return operand.value % divisor === remainder;
+  return value % divisor === remainder;
 };

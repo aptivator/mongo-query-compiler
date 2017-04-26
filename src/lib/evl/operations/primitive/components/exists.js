@@ -1,1 +1,1 @@
-export default (operand, exists) => operand.exists === exists;
+export default (value, testValue, exists) => exists === testValue;

@@ -1,6 +1,6 @@
 let {expect} = require('chai');
-let data = require('../../data/data');
-let compiler = require('../../../dist/compiler');
+let data = require('../../../data/data');
+let compiler = require('../../../../dist/compiler');
 
 describe('$where', () => {
   it('performs query using string format of $where', () => {

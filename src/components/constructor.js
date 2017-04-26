@@ -3,7 +3,7 @@ import evl        from '../lib/evl/evl';
 import compound   from './compound/compound';
 import datum      from './datum/datum';
 import expression from './expression/expression';
-import primitive  from './primitive/primitive';
+import elemental  from './elemental/elemental';
 import writer     from './writer';
 
 function Compiler(query) {
@@ -21,6 +21,6 @@ function Compiler(query) {
   return _.partial(func, _, _d, evl);
 }
 
-_.extend(Compiler.prototype, {compound, datum, expression, primitive, writer});
+_.extend(Compiler.prototype, {compound, datum, expression, elemental, writer});
 
 export default Compiler;

@@ -2,7 +2,7 @@ import _          from 'lodash';
 import pather     from '../../lib/pather';
 import compounds  from './lib/compounds';
 import ignoreds   from './lib/ignoreds';
-import primitives from './lib/primitives';
+import elementals from './lib/elementals';
 
 export default function(parentPath, query, iffer) {
   _.each(query, (operand, op) => {
@@ -10,8 +10,8 @@ export default function(parentPath, query, iffer) {
       return;
     }
     
-    if(primitives.includes(op)) {
-      return this.primitive(parentPath, operand, op, iffer);
+    if(elementals.includes(op)) {
+      return this.elemental(parentPath, operand, op, iffer);
     } 
     
     if(compounds.includes(op)) {
@@ -24,6 +24,6 @@ export default function(parentPath, query, iffer) {
       return this.expression(path, operand, iffer);
     } 
     
-    this.primitive(path, operand, '$eq', iffer);
+    this.elemental(path, operand, '$eq', iffer);
   });
 }

@@ -1,1 +1,1 @@
-export default (operand, rx) => rx.test(operand.value);
+export default (value, testValue) => testValue.test(value);

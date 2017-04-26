@@ -7,11 +7,11 @@ export default (...args) => {
     }
   });
 
-  let [values, options] = args;
+  let [values, testValues] = args;
   
   for(let i = 0, leni = values.length; i < leni; i++) {
-    for(let j = 0, value = values[i], lenj = options.length; j < lenj; j++) {
-      let option = options[j];
+    for(let j = 0, value = values[i], lenj = testValues.length; j < lenj; j++) {
+      let option = testValues[j];
       
       if(_.isRegExp(option) && option.test(value)) {
         break;

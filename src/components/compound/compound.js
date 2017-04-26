@@ -7,7 +7,7 @@ export default function(path, query, op, iffer_) {
   let iffer = iffer_;
   
   if(op === '$not' && !_.isPlainObject(query)) {
-    return this.primitive(path, query, '$ne', iffer_);
+    return this.elemental(path, query, '$ne', iffer_);
   }
   
   if(!iffer) {

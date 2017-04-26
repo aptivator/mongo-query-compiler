@@ -1,1 +1,1 @@
-export default (operand, size) => operand.length === size;
+export default (array, size) => array.length === size;
