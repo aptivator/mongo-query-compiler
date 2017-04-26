@@ -11,6 +11,14 @@ by this transpiler.  `mongo-query-compiler` is meant to be used in development
 situations that require relatively complex filtering operations. For rudimentary
 subsetting, [lodash](https://lodash.com/)'s `_.filter` method is recommended.
 
+### Installation
+
+```
+npm install --save mongo-query-compiler
+```
+
+### Documentation
+
 For complete documentation and examples, see 
 [mongo-query-compiler-docs](https://github.com/aptivator/mongo-query-compiler-docs)
 project.
