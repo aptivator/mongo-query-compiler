@@ -19,6 +19,7 @@ let records = [{
 }];
 
 let query = compiler({cars: {brand: 'toyota', year: {$or: {'': 2008, $eq: 2009, $something: 'sdfsd'}}}});
+console.log(query.toString());
 let results = records.filter(query);
     console.log(results);
   });

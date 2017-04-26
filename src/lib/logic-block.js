@@ -28,10 +28,8 @@ export default class LogicBlock {
       block += (operator || '') + condition;
     }
     
-    block = `(${block})`;
-    
     if(not) {
-      block = `!${block}`;
+      block = `!(${block})`;
     }
     
     return block;
