@@ -6,11 +6,11 @@ describe('combined compound operators', () => {
   it('combines compound operators', () => {
     let query = compiler({
       $and: {
-        $or: [
-          {_id: {$in: [1, 2, 3]}},
-          {_id: 6}
-        ],
-        
+        $or: {
+          $in: {_id: [1, 2, 3]},
+          _id: 6
+        },
+
         finished: {
           $elemMatch: {
             $lt: 11
