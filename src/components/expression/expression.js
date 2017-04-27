@@ -5,8 +5,10 @@ import elementals from './lib/elementals';
 import logicals   from './lib/logicals';
 
 export default function(parentPath, query, iffer) {
-  let flatten = !!query.$flatten;
-  delete query.$flatten;
+  if(query.hasOwnProperty('$flatten')) {
+    var flatten = !!query.$flatten;
+    delete query.$flatten;
+  }
   
   _.each(query, (query, op) => {
     if(ignoreds.includes(op)) {

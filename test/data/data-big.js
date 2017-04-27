@@ -6,7 +6,7 @@ module.exports = [{
     }
   },
   reviews: undefined,
-  tags: ['book', 'technical'],
+  tags: ['book', 'technical', 'John'],
   store: [{
     number: '222', 
     qty: 51,

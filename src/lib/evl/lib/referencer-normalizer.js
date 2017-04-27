@@ -13,9 +13,9 @@ export default operations => {
       }
       
       if(_.isPlainObject(testValue)) {
-        let {$ref} = testValue;
+        let {$ref, $flatten: flatten} = testValue;
         if($ref) {
-          testValue = browser(o, $ref);
+          testValue = browser(o, $ref, {flatten});
         }
       }
 

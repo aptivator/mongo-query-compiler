@@ -43,12 +43,6 @@ describe('$eq', () => {
     expect(results.length).to.equal(0);
   });
   
-  it('supports $ref operator', () => {
-    let query = compiler({favorites: {color: {$eq: {$ref: 'badges.0'}}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(1);
-  });
-  
   it('perfroms equality when one operand is an array', () => {
     let query = compiler({badges: 'blue'});
     let results = data.filter(query);

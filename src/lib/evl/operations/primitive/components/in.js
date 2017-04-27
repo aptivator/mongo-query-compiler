@@ -9,6 +9,10 @@ export default (...args) => {
 
   let [values, testValues] = args;
   
+  if(!testValues.length) {
+    return;
+  }
+  
   for(let i = 0, leni = values.length; i < leni; i++) {
     for(let j = 0, value = values[i], lenj = testValues.length; j < lenj; j++) {
       let option = testValues[j];

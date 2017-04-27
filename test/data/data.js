@@ -60,7 +60,7 @@ module.exports = [{
   finished: [14, 6],
   badges: ['orange'],
   points: [
-    {points: 71, bonus: 20}
+    {points: 71, bonus: 14}
   ]
 }, {
   _id: 6,
@@ -73,6 +73,6 @@ module.exports = [{
   badges: ['black', 'blue'],
   points: [
     {points: 78, bonus: 8},
-    {points: 57, bonus: 7}
+    {points: 57, bonus: 7},
   ]
 }];
