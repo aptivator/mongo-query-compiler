@@ -5,25 +5,28 @@ import elementals from './lib/elementals';
 import logicals   from './lib/logicals';
 
 export default function(parentPath, query, iffer) {
-  _.each(query, (operand, op) => {
+  let flatten = !!query.$flatten;
+  delete query.$flatten;
+  
+  _.each(query, (query, op) => {
     if(ignoreds.includes(op)) {
       return;
     }
     
     if(elementals.includes(op)) {
-      return this.elemental(parentPath, operand, op, iffer);
+      return this.elemental(parentPath, query, op, iffer, flatten);
     } 
     
     if(logicals.includes(op)) {
-      return this.logical(parentPath, operand, op, iffer);
+      return this.logical(parentPath, query, op, iffer);
     } 
     
     let path = pather(parentPath, op);
       
-    if(_.isPlainObject(operand)) {
-      return this.expression(path, operand, iffer);
+    if(_.isPlainObject(query)) {
+      return this.expression(path, query, iffer);
     } 
     
-    this.elemental(path, operand, '$eq', iffer);
+    this.elemental(path, query, '$eq', iffer);
   });
 }
