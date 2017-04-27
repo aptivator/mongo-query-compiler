@@ -14,10 +14,4 @@ describe('$ne', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(5);
   });
-  
-  it('supports $ref operator', () => {
-    let query = compiler({'favorites.color': {$ne: {$ref: 'badges'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(5);
-  });
 });

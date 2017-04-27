@@ -8,10 +8,4 @@ describe('$gte', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(4);
   });
-  
-  it('supports $ref operator', () => {
-    let query = compiler({_id: {$gte: {$ref: 'type'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(6);
-  });
 });

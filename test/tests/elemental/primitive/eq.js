@@ -48,7 +48,7 @@ describe('$eq', () => {
     let results = data.filter(query);
     expect(results.length).to.be.above(0);
     
-    query = compiler({favorites: {color: {$eq: {$ref: 'badges'}}}});
+    query = compiler({favorites: {color: {$eq: ['black', 'blue']}}});
     results = data.filter(query);
     expect(results.length).to.equal(1);
   });

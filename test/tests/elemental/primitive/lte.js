@@ -8,10 +8,4 @@ describe('$lte', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(3);
   });
-  
-  it('supports $ref operator', () => {
-    let query = compiler({type: {$lte: {$ref: '_id'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(6);
-  });
 });

@@ -15,12 +15,6 @@ describe('$nin', () => {
     expect(results.length).to.equal(5);
   });
   
-  it('supports $ref operator', () => {
-    let query = compiler({'favorites.color': {$nin: {$ref: 'badges'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(5);
-  });
-  
   it('can be perfromed on arrays', () => {
     let query = compiler({badges: {$nin: ['orange']}});
     let results = data.filter(query);

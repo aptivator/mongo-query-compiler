@@ -15,6 +15,12 @@ describe('$ref', () => {
     expect(results.length).to.equal(6);
   });
   
+  it('works in $gte', () => {
+    let query = compiler({_id: {$gte: {$ref: 'type'}}});
+    let results = data.filter(query);
+    expect(results.length).to.equal(6);
+  });
+  
   it('performs in $in', () => {
     let query = compiler({'points.bonus': {$in: {$ref: 'finished'}}});
     let results = data.filter(query);
