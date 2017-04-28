@@ -30,6 +30,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.4",
-    "object-browser": "^1.0.0"
+    "object-browser": "^1.0.1"
   }
 }
