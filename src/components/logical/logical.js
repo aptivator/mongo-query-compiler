@@ -2,12 +2,12 @@ import _            from 'lodash';
 import Iffer        from '../../lib/iffer';
 import ifferParamer from './lib/iffer-paramer';
 
-export default function(path, query, op, iffer_) {
+export default function(path, query, op, iffer_, flatten) {
   let ifferParams = ifferParamer(op);
   let iffer = iffer_;
   
   if(op === '$not' && !_.isPlainObject(query)) {
-    return this.elemental(path, query, '$ne', iffer_);
+    return this.elemental(path, query, '$ne', iffer_, flatten);
   }
   
   if(!iffer) {
@@ -18,10 +18,10 @@ export default function(path, query, op, iffer_) {
   
   if(_.isArray(query)) {
     _.each(query, operand => {
-      this.expression(path, operand, iffer);
+      this.expression(path, operand, iffer, flatten);
     });
   } else {
-    this.expression(path, query, iffer);
+    this.expression(path, query, iffer, flatten);
   }
   
   if(!iffer_) {

@@ -4,9 +4,9 @@ import ignoreds   from './lib/ignoreds';
 import elementals from './lib/elementals';
 import logicals   from './lib/logicals';
 
-export default function(parentPath, query, iffer) {
+export default function(parentPath, query, iffer, flatten) {
   if(query.hasOwnProperty('$flatten')) {
-    var flatten = !!query.$flatten;
+    flatten = !!query.$flatten;
     delete query.$flatten;
   }
   
@@ -20,15 +20,15 @@ export default function(parentPath, query, iffer) {
     } 
     
     if(logicals.includes(op)) {
-      return this.logical(parentPath, query, op, iffer);
+      return this.logical(parentPath, query, op, iffer, flatten);
     } 
     
     let path = pather(parentPath, op);
       
     if(_.isPlainObject(query)) {
-      return this.expression(path, query, iffer);
+      return this.expression(path, query, iffer, flatten);
     } 
     
-    this.elemental(path, query, '$eq', iffer);
+    this.elemental(path, query, '$eq', iffer, flatten);
   });
 }
