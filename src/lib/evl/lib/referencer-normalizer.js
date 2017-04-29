@@ -5,11 +5,11 @@ export default operations => {
   return _.reduce(operations, (operations, op, opName) => {
     operations[opName] = (value, testValue, exists, o, symbolTable, symbolName) => {
       if(!exists) {
-        if(!['$ne', '$nin'].includes(opName)) {
-          return false;
+        if(['$ne', '$nin'].includes(opName)) {
+          return true;
         }
         
-        return true;
+        return;
       }
       
       if(_.isPlainObject(testValue)) {
