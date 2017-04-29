@@ -17,8 +17,8 @@ export default function(path, query, op, iffer_, flatten) {
   }
   
   if(_.isArray(query)) {
-    _.each(query, operand => {
-      this.expression(path, operand, iffer, flatten);
+    _.each(query, query => {
+      this.expression(path, query, iffer, flatten);
     });
   } else {
     this.expression(path, query, iffer, flatten);
