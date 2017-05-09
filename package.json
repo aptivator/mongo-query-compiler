@@ -1,6 +1,6 @@
 {
   "name": "mongo-query-compiler",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Converts mongodb query objects into JavaScript filter functions",
   "main": "dist/compiler.js",
   "jsnext:main": "dist/compiler.es.js",
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/aptivator/mongo-query-compiler/issues"
   },
-  "homepage": "https://github.com/aptivator/mongo-query-compiler#readme"
+  "homepage": "https://github.com/aptivator/mongo-query-compiler#readme",
   "keywords": [
     "mongo",
     "mongodb",
