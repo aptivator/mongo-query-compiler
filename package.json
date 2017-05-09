@@ -19,6 +19,16 @@
   "bugs": {
     "url": "https://github.com/aptivator/mongo-query-compiler/issues"
   },
+  "homepage": "https://github.com/aptivator/mongo-query-compiler#readme"
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "query",
+    "array",
+    "filtering",
+    "transpiler",
+    "compiler"
+  ],
   "devDependencies": {
     "buble": "^0.15.2",
     "chai": "^3.5.0",
