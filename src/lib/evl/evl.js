@@ -1,4 +1,4 @@
-import browser    from 'object-browser';
+import {browser}  from 'object-browser';
 import operations from './lib/operations-aggregator';
 
 export default (o, path, opName, testValue, symbolTable, symbolName, flatten) => {

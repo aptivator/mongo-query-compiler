@@ -1,5 +1,5 @@
-import _       from 'lodash';
-import browser from 'object-browser';
+import _         from 'lodash';
+import {browser} from 'object-browser';
 
 export default (value, callback, exists, o, symbolTable, symbolName) => {
   if(_.isString(callback)) {

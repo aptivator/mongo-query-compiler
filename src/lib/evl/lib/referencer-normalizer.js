@@ -1,5 +1,5 @@
-import _       from 'lodash';
-import browser from 'object-browser';
+import _         from 'lodash';
+import {browser} from 'object-browser';
 
 export default operations => {
   return _.reduce(operations, (operations, op, opName) => {
