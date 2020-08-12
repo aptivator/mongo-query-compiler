@@ -1,14 +1,14 @@
 {
   "name": "mongo-query-compiler",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Converts mongodb query objects into JavaScript filter functions",
-  "main": "dist/compiler.js",
-  "jsnext:main": "dist/compiler.es.js",
+  "main": "dist/mongo-query-compiler.js",
+  "jsnext:main": "dist/mongo-query-compiler.es.js",
   "scripts": {
     "build": "rollup -c",
-    "test": "mocha ./test/tests/**/**/*.js ./test/tests/**/*.js",
-    "watch": "npm test && run-when-changed --watch \"dist/compiler.js\" --watch \"test/tests/**/*.js\" --exec \"npm test\"",
-    "dev": "rollup -c -w & npm run watch"
+    "test": "mocha \"./test/**/*.test.js\" --recursive --require @babel/register",
+    "test:coverage": "nyc --reporter=text npm run test",
+    "dev": "npm test & run-when-changed --watch \"src/**/*.js\" --watch \"test/**/*.js\" --exec \"npm test\""
   },
   "author": "Dmitriy A. Nesterkin",
   "license": "MIT",
@@ -30,16 +30,22 @@
     "compiler"
   ],
   "devDependencies": {
-    "buble": "^0.15.2",
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0",
-    "rollup": "^0.41.6",
-    "rollup-plugin-buble": "^0.15.0",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.10.5",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "chai": "^4.2.0",
+    "mocha": "^3.5.3",
+    "nyc": "^14.1.1",
+    "rollup": "^1.32.1",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-watch": "^3.2.2",
-    "run-when-changed": "^2.0.3"
+    "run-when-changed": "^2.1.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
-    "object-browser": "^1.0.3"
+    "lodash": "^4.17.19",
+    "object-browser": "^1.0.6"
   }
 }

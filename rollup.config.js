@@ -1,27 +1,24 @@
-import buble from 'rollup-plugin-buble';
+import babel from 'rollup-plugin-babel';
 let packageJson = require('./package.json');
-let {'jsnext:main': jsnext, main} = packageJson;
+let {'jsnext:main': jsnext, main, name} = packageJson;
 
 export default {
-  moduleName: 'mongo-query-compiler',
-  entry: 'src/compiler.js',
-  targets: [{
+  input: 'src/mongo-query-compiler.js',
+  output: [{
     format: 'umd',
-    dest: main
+    file: main,
+    name,
+    globals: {
+      lodash: '_',
+      'object-browser': 'browser'
+    }
   }, {
     format: 'es',
-    dest: jsnext
+    file: jsnext,
+    name
   }],
-  globals: {
-    lodash: '_',
-    'object-browser': 'browser'
-  },
   external: ['lodash', 'object-browser'],
   plugins: [
-    buble({
-      transforms: {
-        dangerousForOf: true
-      }
-    })
+    babel()
   ]
 };

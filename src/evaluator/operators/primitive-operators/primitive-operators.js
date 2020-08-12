@@ -1,0 +1,83 @@
+import _                    from 'lodash';
+import {generateComparator} from './_lib/comparator-generator';
+
+export const primitiveOperators = {
+  $eq(value, testValue) {
+    for(let i = 0; i < 2; i++) {
+      if(_.isArray(value) && !_.isObject(testValue)) {
+        return value.includes(testValue);
+      }
+      
+      [value, testValue] = [testValue, value];
+    }
+    
+    if(_.isRegExp(testValue)) {
+      return testValue.test(value);
+    }
+    
+    return _.isEqual(value, testValue);
+  },
+  
+  $exists(value, testValue, exists) {
+    return testValue === exists;
+  },
+  
+  $gt: generateComparator('gt'),
+  
+  $gte: generateComparator('gte'),
+  
+  $in(...args) {
+    args.forEach((arg, index, args) => {
+      if(!_.isArray(arg)) {
+        args[index] = [arg];
+      }
+    });
+    
+    let [values, testValues] = args;
+    
+    for(let i = 0; i < values.length; i++) {
+      for(let j = 0, value = values[i]; j < testValues.length; j++) {
+        let options = testValues[j];
+        
+        if(_.isRegExp(options) && options.test(value)) {
+          break;
+        }
+        
+        if(value === options) {
+          break;
+        }
+        
+        if(j === testValues.length - 1) {
+          return;
+        }
+      }
+    }
+    
+    return true;
+  },
+  
+  $lt: generateComparator('lt'),
+  
+  $lte: generateComparator('lte'),
+  
+  $mod(value, [divisor, remainder]) {
+    return value % divisor === remainder;
+  },
+  
+  $ne() {
+    return !primitiveOperators.$eq(...arguments);
+  },
+  
+  $nin() {
+    return !primitiveOperators.$in(...arguments);
+  },
+  
+  $regexp(value, testValue) {
+    return testValue.test(value);
+  },
+  
+  $type(value, type) {
+    type = 'is' + _.capitalize(type);
+    return _[type](value);
+  }
+};
