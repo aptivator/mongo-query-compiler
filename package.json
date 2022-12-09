@@ -46,6 +46,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.19",
-    "object-browser": "^1.0.8"
+    "object-browser": "^1.0.9"
   }
 }
