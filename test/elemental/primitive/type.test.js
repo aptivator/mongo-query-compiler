@@ -10,6 +10,7 @@ describe('$type', () => {
   });
   
   it('throws an error when an invalid lodash type is specified', () => {
-    expect(compileMongoQuery({_id: {$type: 'biginteger'}})).to.throw();
+    let query = compileMongoQuery({_id: {$type: 'biginteger'}});
+    expect(() => data.filter(query)).to.throw();
   });
 });
