@@ -1,6 +1,6 @@
 {
   "name": "mongo-query-compiler",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Converts mongodb query objects into JavaScript filter functions",
   "main": "dist/mongo-query-compiler.js",
   "jsnext:main": "dist/mongo-query-compiler.es.js",

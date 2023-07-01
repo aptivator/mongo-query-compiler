@@ -32,28 +32,30 @@ export const primitiveOperators = {
         args[index] = [arg];
       }
     });
-    
+
     let [values, testValues] = args;
-    
-    for(let i = 0; i < values.length; i++) {
-      for(let j = 0, value = values[i]; j < testValues.length; j++) {
-        let options = testValues[j];
-        
-        if(_.isRegExp(options) && options.test(value)) {
-          break;
-        }
-        
-        if(value === options) {
-          break;
-        }
-        
-        if(j === testValues.length - 1) {
-          return;
+
+    if(testValues.length) {
+      for(let i = 0; i < values.length; i++) {
+        for(let j = 0, value = values[i]; j < testValues.length; j++) {
+          let options = testValues[j];
+          
+          if(_.isRegExp(options) && options.test(value)) {
+            break;
+          }
+          
+          if(value === options) {
+            break;
+          }
+          
+          if(j === testValues.length - 1) {
+            return;
+          }
         }
       }
+      
+      return true;
     }
-    
-    return true;
   },
   
   $lt: generateComparator('lt'),

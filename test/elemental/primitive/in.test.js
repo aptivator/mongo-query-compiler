@@ -26,4 +26,10 @@ describe('$in', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(2);
   });
+
+  it('returns an empty array when $in is empty', () => {
+    let query = compileMongoQuery({_id: {$in: []}});
+    let results = data.filter(query);
+    expect(results).to.eql([]);
+  });
 });
