@@ -10,7 +10,7 @@ export default {
     name,
     globals: {
       lodash: '_',
-      'object-browser': 'browser'
+      'object-browser': 'browser',
     }
   }, {
     format: 'es',

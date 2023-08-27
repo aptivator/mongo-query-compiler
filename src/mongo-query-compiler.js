@@ -14,7 +14,7 @@ export function compileMongoQuery(query) {
   }
 }
 
-function elemental(options) {
+function elemental(options, parentOptions) {
   let {operator, operand} = options;
 
   if(utils.unwindOperand(operator, operand)) {
@@ -23,19 +23,19 @@ function elemental(options) {
     return Object.entries(operand).forEach(([_path, operand]) => {
       _path = utils.makePath(path, _path);
       let _options = Object.assign({}, options, {path: _path, operand});
-      elemental(_options);
+      elemental(_options, parentOptions);
     });
   }
 
-  preprocessElementalOperands(options);
+  preprocessElementalOperands(options, parentOptions);
   addStatement(options);
 }
 
-function preprocessElementalOperands(options) {
+function preprocessElementalOperands(options, parentOptions) {
   let {operator, operand} = options;
 
-  if(operator === '$regexp' && typeof operand === 'string') {
-    return options.operand = new RegExp(operand);
+  if('$regexp'.startsWith(operator) && typeof operand === 'string') {
+    return options.operand = new RegExp(operand, parentOptions.operand.$options);
   }
 }
 
@@ -65,7 +65,7 @@ function expression(options, start = false) {
     let _options = Object.assign({}, options, {operator, operand});
     
     if(operatorTypes.elementals.includes(operator)) {
-      return elemental(_options);
+      return elemental(_options, options);
     }
     
     if(operatorTypes.logicals.includes(operator)) {

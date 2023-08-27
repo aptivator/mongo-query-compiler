@@ -52,7 +52,7 @@ module.exports = [{
   ]
 }, {
   _id: 5,
-  name: 'xyz',
+  name: 'Xyz',
   age: 23,
   type: 2,
   status: 'D',
