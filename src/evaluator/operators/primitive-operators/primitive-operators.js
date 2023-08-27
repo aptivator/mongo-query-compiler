@@ -1,6 +1,4 @@
 import _                    from 'lodash';
-import isEqual              from 'lodash.isequal';
-import isRegExp             from 'lodash.isregexp';
 import {generateComparator} from './_lib/comparator-generator';
 
 export const primitiveOperators = {
@@ -13,11 +11,11 @@ export const primitiveOperators = {
       [value, testValue] = [testValue, value];
     }
     
-    if(isRegExp(testValue)) {
+    if(_.isRegExp(testValue)) {
       return testValue.test(value);
     }
     
-    return isEqual(value, testValue);
+    return _.isEqual(value, testValue);
   },
   
   $exists(value, testValue, exists) {
@@ -38,7 +36,7 @@ export const primitiveOperators = {
         for(let j = 0, value = values[i]; j < testValues.length; j++) {
           let options = testValues[j];
           
-          if(isRegExp(options) && options.test(value)) {
+          if(_.isRegExp(options) && options.test(value)) {
             break;
           } else if(value === options) {
             break;
