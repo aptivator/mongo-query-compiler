@@ -1,15 +1,15 @@
-import _ from 'lodash';
+import {comparators} from './comparators';
 
 export function generateComparator(operator) {
   return (values, testValue) => {
-    if(!_.isArray(values)) {
+    if(!Array.isArray(values)) {
       values = [values];
     }
     
     for(let value of values) {
-      if(_[operator](value, testValue)) {
+      if(comparators[operator](value, testValue)) {
         return true;
       }
     }
-  }; 
+  };
 }

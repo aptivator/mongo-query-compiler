@@ -1,4 +1,4 @@
-module.exports = [{ 
+module.exports = [{
   item: {
     type: 'book',
     description: {

@@ -1,7 +1,10 @@
-import _               from 'lodash';
 import {operatorTypes} from './vars';
 
 export const utils = {
+  isPlainObject(o) {
+    return o && typeof o === 'object' && o.constructor === Object;
+  },
+
   makePath(parent, child) {
     if(!parent) {
       return child;
@@ -14,10 +17,13 @@ export const utils = {
     return parent + '.' + child;
   },
   
-  uniqueId: _.partial(_.uniqueId, 'v'),
+  uniqueId: (() => {
+    let symbolCounter = 0;
+    return () => 'v' + symbolCounter++;
+  })(),
   
   unwindOperand(operator, operand) {
-    if(!_.isPlainObject(operand)) {
+    if(!utils.isPlainObject(operand)) {
       return;
     }
     

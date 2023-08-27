@@ -1,13 +1,13 @@
 {
   "name": "mongo-query-compiler",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Converts mongodb query objects into JavaScript filter functions",
   "main": "dist/mongo-query-compiler.js",
   "jsnext:main": "dist/mongo-query-compiler.es.js",
   "scripts": {
     "build": "rollup -c",
     "test": "mocha \"./test/**/*.test.js\" --recursive --require @babel/register",
-    "test:coverage": "nyc --reporter=text npm run test",
+    "test:coverage": "c8 --reporter=text npm run test",
     "dev": "npm test & run-when-changed --watch \"src/**/*.js\" --watch \"test/**/*.js\" --exec \"npm test\""
   },
   "author": "Dmitriy A. Nesterkin",
@@ -36,9 +36,9 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/register": "^7.10.5",
     "babel-preset-es2015-rollup": "^3.0.0",
+    "c8": "^8.0.0",
     "chai": "^4.2.0",
     "mocha": "^3.5.3",
-    "nyc": "^14.1.1",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-watch": "^3.2.2",
@@ -46,6 +46,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.19",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isregexp": "^4.0.1",
     "object-browser": "^1.0.9"
   }
 }

@@ -1,14 +1,14 @@
-import _         from 'lodash';
 import {browser} from 'object-browser';
+import {utils}   from '../../../_lib/utils';
 
 export function addExistenceReferencePreprocessing(operators) {
-  return _.mapValues(operators, (operate, operatorName) => {
-    return function(value, testValue, exists, o) {
+  Object.entries(operators).forEach(([operatorName, operate]) => {
+    operators[operatorName] = function(value, testValue, exists, o) {
       if(!exists) {
         return;
       }
       
-      if(_.isPlainObject(testValue)) {
+      if(utils.isPlainObject(testValue)) {
         let {$ref, $flatten: flatten} = testValue;
         
         if($ref) {
@@ -17,6 +17,8 @@ export function addExistenceReferencePreprocessing(operators) {
       }
       
       return operate(...arguments);
-    };
+    }
   });
+
+  return operators;
 }

@@ -1,21 +1,23 @@
 import _                    from 'lodash';
+import isEqual              from 'lodash.isequal';
+import isRegExp             from 'lodash.isregexp';
 import {generateComparator} from './_lib/comparator-generator';
 
 export const primitiveOperators = {
   $eq(value, testValue) {
     for(let i = 0; i < 2; i++) {
-      if(_.isArray(value) && !_.isObject(testValue)) {
+      if(Array.isArray(value) && typeof testValue !== 'object') {
         return value.includes(testValue);
       }
       
       [value, testValue] = [testValue, value];
     }
     
-    if(_.isRegExp(testValue)) {
+    if(isRegExp(testValue)) {
       return testValue.test(value);
     }
     
-    return _.isEqual(value, testValue);
+    return isEqual(value, testValue);
   },
   
   $exists(value, testValue, exists) {
@@ -26,29 +28,21 @@ export const primitiveOperators = {
   
   $gte: generateComparator('gte'),
   
-  $in(...args) {
-    args.forEach((arg, index, args) => {
-      if(!_.isArray(arg)) {
-        args[index] = [arg];
-      }
+  $in(values, testValues) {
+    [values, testValues] = [values, testValues].map((arr) => {
+      return Array.isArray(arr) ? arr : [arr];
     });
-
-    let [values, testValues] = args;
 
     if(testValues.length) {
       for(let i = 0; i < values.length; i++) {
         for(let j = 0, value = values[i]; j < testValues.length; j++) {
           let options = testValues[j];
           
-          if(_.isRegExp(options) && options.test(value)) {
+          if(isRegExp(options) && options.test(value)) {
             break;
-          }
-          
-          if(value === options) {
+          } else if(value === options) {
             break;
-          }
-          
-          if(j === testValues.length - 1) {
+          } else if(j === testValues.length - 1) {
             return;
           }
         }

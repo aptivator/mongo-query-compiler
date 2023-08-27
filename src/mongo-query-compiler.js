@@ -1,4 +1,3 @@
-import _               from 'lodash';
 import {utils}         from './_lib/utils';
 import {operatorTypes} from './_lib/vars';
 import {evaluate}      from './evaluator/evaluator';
@@ -9,13 +8,18 @@ export function compileMongoQuery(query) {
   let logicBlock = new LogicBlock();
   let code = expression({operand: query, symbolTable, logicBlock}, true);
   let filterer = new Function('o', 'symbolTable', 'evaluate', code);
-  return _.partial(filterer, _, symbolTable, evaluate);
+
+  return function(o) {
+    return filterer(o, symbolTable, evaluate);  
+  }
 }
 
 function elemental(options) {
-  let {operator, operand, path} = options;
+  let {operator, operand} = options;
   
   if(utils.unwindOperand(operator, operand)) {
+    let {path} = options;
+
     return Object.entries(operand).forEach(([_path, operand]) => {
       _path = utils.makePath(path, _path);
       let _options = Object.assign({}, options, {path: _path, operand});
@@ -23,11 +27,12 @@ function elemental(options) {
     });
   }
   
-  if(!path) {
-    path = '__self';
-  }
-  
+  addStatement(options);
+}
+
+function addStatement(options) {
   let {logicBlock, flatten, symbolTable} = options;
+  let {operand, operator, path = '__self'} = options;
   let symbolName = utils.uniqueId();
   let statement = `evaluate(o, '${path}', ${flatten}, '${operator}', symbolTable, '${symbolName}')`;
   
@@ -60,7 +65,7 @@ function expression(options, start = false) {
     
     _options.path = utils.makePath(_options.path, operator);
     
-    if(_.isPlainObject(operand)) {
+    if(utils.isPlainObject(operand)) {
       return expression(_options);
     }
     
@@ -76,14 +81,14 @@ function expression(options, start = false) {
 function logical(options) {
   let {operator, operand} = options;
   
-  if(operator === '$not' && !_.isPlainObject(operand)) {
+  if(operator === '$not' && !utils.isPlainObject(operand)) {
     options.operator = '$ne';
     return elemental(options);
   }
   
   options.logicBlock = options.logicBlock.group(operator);
   
-  if(_.isArray(operand)) {
+  if(Array.isArray(operand)) {
     return operand.forEach(operand => {
       let _options = Object.assign({}, options, {operand});
       expression(_options);

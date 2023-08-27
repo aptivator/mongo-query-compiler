@@ -1,34 +1,35 @@
-import _                   from 'lodash';
 import {compileMongoQuery} from '../../../mongo-query-compiler';
 
 export const arrayOperators = {
   $all(array, all) {
-    if(!_.isArray(array)) {
-      array = [array];
-    }
-    
-    if(!_.isArray(all)) {
-      all = [all];
+    [array, all] = [array, all].map((arr) => {
+      return Array.isArray(arr) ? arr : [arr];
+    });
+
+    for(let value of all) {
+      if(!array.includes(value)) {
+        return;
+      }
     }
 
-    return !_.difference(all, array).length;
+    return true;
   },
   
   $elemMatch(array, filterer, exists, o, symbolTable, symbolName) {
-    if(!_.isArray(array)) {
+    if(!Array.isArray(array)) {
       array = [array];
     }
     
-    if(!_.isFunction(filterer)) {
+    if(typeof filterer !== 'function') {
       filterer = compileMongoQuery(filterer);
       symbolTable[symbolName] = filterer;
     }
     
-    return !!_.filter(array, filterer).length;
+    return array.filter(filterer).length;
   },
   
   $size(array, size) {
-    if(!_.isArray(array)) {
+    if(!Array.isArray(array)) {
       array = [array];
     }
     
