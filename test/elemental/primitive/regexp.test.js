@@ -8,4 +8,10 @@ describe('$regexp', () => {
     let results = data.filter(query);
     expect(results.length).to.equal(2);
   });
+
+  it('converts string regexp to RegExp object', () => {
+    let query = compileMongoQuery({$regexp: {name: '^x'}});
+    let results = data.filter(query);
+    expect(results.length).to.equal(2);
+  });
 });

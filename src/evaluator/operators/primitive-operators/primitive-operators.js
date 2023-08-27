@@ -68,6 +68,10 @@ export const primitiveOperators = {
     return !primitiveOperators.$in(...arguments);
   },
   
+  $regex() {
+    return primitiveOperators.$regexp(...arguments);
+  },
+
   $regexp(value, testValue) {
     return testValue.test(value);
   },

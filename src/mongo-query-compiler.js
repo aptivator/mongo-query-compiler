@@ -16,7 +16,7 @@ export function compileMongoQuery(query) {
 
 function elemental(options) {
   let {operator, operand} = options;
-  
+
   if(utils.unwindOperand(operator, operand)) {
     let {path} = options;
 
@@ -26,8 +26,17 @@ function elemental(options) {
       elemental(_options);
     });
   }
-  
+
+  preprocessElementalOperands(options);
   addStatement(options);
+}
+
+function preprocessElementalOperands(options) {
+  let {operator, operand} = options;
+
+  if(operator === '$regexp' && typeof operand === 'string') {
+    return options.operand = new RegExp(operand);
+  }
 }
 
 function addStatement(options) {
