@@ -1,5 +1,5 @@
-import {browser} from 'object-browser';
-import {utils}   from '../../../_lib/utils';
+import {browser}       from 'object-browser';
+import {isPlainObject} from '../../../_lib/utils';
 
 export function addExistenceReferencePreprocessing(operators) {
   Object.entries(operators).forEach(([operatorName, operate]) => {
@@ -8,7 +8,7 @@ export function addExistenceReferencePreprocessing(operators) {
         return;
       }
       
-      if(utils.isPlainObject(testValue)) {
+      if(isPlainObject(testValue)) {
         let {$ref, $flatten: flatten} = testValue;
         
         if($ref) {

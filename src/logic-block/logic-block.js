@@ -1,14 +1,10 @@
-import {operatorToNotPlusOrMap} from './_lib/vars';
+import {logicOperatorToNotAndOperator} from './_lib/vars';
 
 export class LogicBlock {
   constructor(logicOperator = '$and') {
-    let {not, or} = operatorToNotPlusOrMap[logicOperator];
-    
-    Object.assign(this, {
-      conditions: [], 
-      not, 
-      operator: or ? '||' : '&&',
-    });
+    let notAndOperator = logicOperatorToNotAndOperator[logicOperator];
+    Object.assign(this, notAndOperator);
+    this.conditions = [];
   }
   
   add(condition) {
@@ -21,7 +17,7 @@ export class LogicBlock {
     return logicBlock;
   }
   
-  return(wrapInIfStatement) {
+  return() {
     let {conditions, not, operator} = this;
     let block = [];
     
@@ -33,14 +29,14 @@ export class LogicBlock {
       block.push(condition);
     }
     
-    block = '(' + block.join(operator) + ')';
-    
+    if(block.length === 1) {
+      block = block[0];
+    } else {
+      block = '(' + block.join(operator) + ')';
+    }
+
     if(not) {
       block = '!' + block;
-    }
-    
-    if(wrapInIfStatement) {
-      block = `if(${block}) { return false; }`;
     }
     
     return block;

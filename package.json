@@ -1,6 +1,6 @@
 {
   "name": "mongo-query-compiler",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Converts mongodb query objects into JavaScript filter functions",
   "main": "dist/mongo-query-compiler.js",
   "jsnext:main": "dist/mongo-query-compiler.es.js",
@@ -8,7 +8,8 @@
     "build": "rollup -c",
     "test": "mocha \"./test/**/*.test.js\" --recursive --require @babel/register",
     "test:coverage": "c8 --reporter=text npm run test",
-    "dev": "npm test & run-when-changed --watch \"src/**/*.js\" --watch \"test/**/*.js\" --exec \"npm test\""
+    "dev": "npm test & run-when-changed --watch \"src/**/*.js\" --watch \"test/**/*.js\" --exec \"npm test\"",
+    "version": "npm version --no-git-tag-version --"
   },
   "author": "Dmitriy A. Nesterkin",
   "license": "MIT",

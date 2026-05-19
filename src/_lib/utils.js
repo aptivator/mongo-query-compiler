@@ -1,32 +1,28 @@
 import {operatorTypes} from './vars';
 
-export const utils = {
-  isPlainObject(o) {
-    return o && typeof o === 'object' && o.constructor === Object;
-  },
+export const getId = (() => {
+  let symbolCounter = 0;
+  return () => symbolCounter++;
+})()
 
-  makePath(parent, child) {
-    if(!parent) {
-      return child;
-    }
-    
-    if(!child) {
-      return parent;
-    }
-    
-    return parent + '.' + child;
-  },
-  
-  uniqueId: (() => {
-    let symbolCounter = 0;
-    return () => 'v' + symbolCounter++;
-  })(),
-  
-  unwindOperand(operator, operand) {
-    if(!utils.isPlainObject(operand)) {
-      return;
-    }
-    
-    return !operand.$ref && !operatorTypes.objectAcceptors.includes(operator);
+export function isPlainObject(o) {
+  return o && o.constructor === Object;
+}
+
+export function isUnwindableOperand(operator, operand) {
+  if(isPlainObject(operand)) {
+    return !operand.$ref && !operatorTypes.objectAcceptors.has(operator);
   }
-};
+}
+
+export function makePath(parent, child) {
+  if(!parent) {
+    return child;
+  }
+  
+  if(!child) {
+    return parent;
+  }
+  
+  return parent + '.' + child;
+}

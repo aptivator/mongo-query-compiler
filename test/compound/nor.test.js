@@ -2,7 +2,6 @@ import {expect}            from 'chai';
 import data                from '../_fixtures/data';
 import {compileMongoQuery} from '../../src/mongo-query-compiler';
 
-
 describe('$nor', () => {
   it('performs explicit $nor operation using object of queries', () => {
     let query = compileMongoQuery({favorites: {$nor: {artist: 'Noguchi', food: 'cake'}}});

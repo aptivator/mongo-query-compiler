@@ -1,12 +1,13 @@
-import {utils}         from './_lib/utils';
-import {operatorTypes} from './_lib/vars';
-import {evaluate}      from './evaluator/evaluator';
-import {LogicBlock}    from './logic-block/logic-block';
+import {getId, isPlainObject, isUnwindableOperand, makePath} from './_lib/utils';
+import {operatorTypes}                                       from './_lib/vars';
+import {evaluate}                                            from './evaluator/evaluator';
+import {LogicBlock}                                          from './logic-block/logic-block';
 
 export function compileMongoQuery(query) {
   let symbolTable = {};
-  let logicBlock = new LogicBlock();
-  let code = expression({operand: query, symbolTable, logicBlock}, true);
+  let params = {operand: query, symbolTable, logicBlock: new LogicBlock};
+  let logicBlock = expression(params);
+  let code = 'return ' + logicBlock.return();
   let filterer = new Function('o', 'symbolTable', 'evaluate', code);
 
   return function(o) {
@@ -17,12 +18,12 @@ export function compileMongoQuery(query) {
 function elemental(options, parentOptions) {
   let {operator, operand} = options;
 
-  if(utils.unwindOperand(operator, operand)) {
+  if(isUnwindableOperand(operator, operand)) {
     let {path} = options;
 
-    return Object.entries(operand).forEach(([_path, operand]) => {
-      _path = utils.makePath(path, _path);
-      let _options = Object.assign({}, options, {path: _path, operand});
+    return Object.entries(operand).forEach(([subPath, operand]) => {
+      subPath = makePath(path, subPath);
+      let _options = Object.assign({}, options, {path: subPath, operand});
       elemental(_options, parentOptions);
     });
   }
@@ -42,14 +43,14 @@ function preprocessElementalOperands(options, parentOptions) {
 function addStatement(options) {
   let {logicBlock, flatten, symbolTable} = options;
   let {operand, operator, path = '__self'} = options;
-  let symbolName = utils.uniqueId();
+  let symbolName = getId();
   let statement = `evaluate(o, '${path}', ${flatten}, '${operator}', symbolTable, '${symbolName}')`;
   
   symbolTable[symbolName] = operand;
   logicBlock.add(statement);
 }
 
-function expression(options, start = false) {
+function expression(options) {
   let {operand} = options;
   
   if(operand.hasOwnProperty('$flatten')) {
@@ -58,23 +59,23 @@ function expression(options, start = false) {
   }
   
   Object.entries(operand).forEach(([operator, operand]) => {
-    if(operatorTypes.ignoreds.includes(operator)) {
+    if(operatorTypes.ignoreds.has(operator)) {
       return;
     }
     
     let _options = Object.assign({}, options, {operator, operand});
     
-    if(operatorTypes.elementals.includes(operator)) {
+    if(operatorTypes.elementals.has(operator)) {
       return elemental(_options, options);
     }
     
-    if(operatorTypes.logicals.includes(operator)) {
+    if(operatorTypes.logicals.has(operator)) {
       return logical(_options);
     }
     
-    _options.path = utils.makePath(_options.path, operator);
+    _options.path = makePath(_options.path, operator);
     
-    if(utils.isPlainObject(operand)) {
+    if(isPlainObject(operand)) {
       return expression(_options);
     }
     
@@ -82,15 +83,13 @@ function expression(options, start = false) {
     elemental(_options);
   });
   
-  if(start) {
-    return options.logicBlock.return(true) + 'return true;';
-  }
+  return options.logicBlock;
 }
 
 function logical(options) {
   let {operator, operand} = options;
   
-  if(operator === '$not' && !utils.isPlainObject(operand)) {
+  if(operator === '$not' && !isPlainObject(operand)) {
     options.operator = '$ne';
     return elemental(options);
   }

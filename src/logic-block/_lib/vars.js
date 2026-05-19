@@ -1,6 +1,6 @@
-export const operatorToNotPlusOrMap = {
-  $or: {not: false, or: false},
-  $nor: {not: true, or: false},
-  $not: {not: true, or: false},
-  $and: {not: false, or: true}
+export const logicOperatorToNotAndOperator = {
+  $or: {not: false, operator: '||'},
+  $nor: {not: true, operator: '||'},
+  $not: {not: true, operator: '&&'},
+  $and: {not: false, operator: '&&'}
 };
