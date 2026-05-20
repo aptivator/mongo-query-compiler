@@ -31,6 +31,7 @@ describe('$flatten', () => {
         }
       }
     });
+
     let record = {store: [{id: 2, employees: [{name: {first: 'Xavier'}}]}]};
     let result = query(record);
     expect(result).to.be.true;
