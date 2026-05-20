@@ -28,7 +28,7 @@ Although not fully recommended, it was used by some as a replacement for MongoDB
 rules engines.  Its grammar supports specification of rules of any depth and complexity
 and can thus represent rich use cases.  Despite the emphasis on low- to mid-scale, the
 compiled queries can be executed at a rate of 10s to 100s of thousands per second depending
-on the hardware.
+on the hardware and the query sophistication.
 
 ### Documentation
 
