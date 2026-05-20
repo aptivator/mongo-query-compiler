@@ -1,5 +1,4 @@
 import {expect}            from 'chai';
-import data                from '../_fixtures/data';
 import {compileMongoQuery} from '../../src/mongo-query-compiler';
 
 describe('combined compound operators', () => {
@@ -7,10 +6,9 @@ describe('combined compound operators', () => {
     let query = compileMongoQuery({
       $and: {
         $or: {
-          $in: {_id: [1, 2, 3]},
-          _id: 6
+          $in: {id: [1, 2, 3]},
+          id: 6
         },
-
         finished: {
           $elemMatch: {
             $lt: 11
@@ -18,9 +16,12 @@ describe('combined compound operators', () => {
         }
       }
     });
-    
-    let results = data.filter(query);
-    expect(results.length).to.equal(2);
+    let record = {id: 2, finished: [9, 10, 11]};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.id = 7;
+    result = query(record);
+    expect(result).to.be.false;
   });
   
   it('performs negation on combined compound operators', () => {
@@ -28,8 +29,8 @@ describe('combined compound operators', () => {
       $not: {
         $and: {
           $or: [
-            {_id: {$in: [1, 2, 3]}},
-            {_id: 6}
+            {id: {$in: [1, 2, 3]}},
+            {id: 6}
           ],
           
           finished: {
@@ -40,8 +41,11 @@ describe('combined compound operators', () => {
         }
       }
     });
-    
-    let results = data.filter(query);
-    expect(results.length).to.equal(4);
+    let record = {id: 0, finished: [9, 10, 11]};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.id = 1;
+    result = query(record);
+    expect(result).to.be.false;
   });
 });

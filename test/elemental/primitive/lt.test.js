@@ -1,11 +1,14 @@
 import {expect}            from 'chai';
-import data                from '../../_fixtures/data';
 import {compileMongoQuery} from '../../../src/mongo-query-compiler';
 
 describe('$lt', () => {
   it('performs less than comparison', () => {
-    let query = compileMongoQuery({_id: {$lt: 3}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(2);
+    let query = compileMongoQuery({id: {$lt: 3}});
+    let record = {id: 2};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.id = 3;
+    result = query(record);
+    expect(result).to.be.false;
   });
 });

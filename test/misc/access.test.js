@@ -1,31 +1,25 @@
 import {expect}            from 'chai';
-import data                from '../_fixtures/data';
 import {compileMongoQuery} from '../../src/mongo-query-compiler';
 
 describe('access of nested array documents', () => {
   it('supports dot notation', () => {
     let query = compileMongoQuery({'points.bonus': 10});
-    let results = data.filter(query);
-    expect(results.length).to.equal(1);
+    let record = {points: {bonus: 10}};
+    let result = query(record);
+    expect(result).to.be.true;
   });
   
   it('supports sub-object notation', () => {
-    let query = compileMongoQuery({
-      points: {
-        1: {
-          bonus: {
-            $eq: 10
-          }
-        }
-      }
-    });
-    let results = data.filter(query);
-    expect(results.length).to.equal(1);
+    let query = compileMongoQuery({points: {1: {bonus: {$eq: 10}}}});
+    let record = {points: {1: {bonus: 10}}};
+    let result = query(record);
+    expect(result).to.be.true;
   });
   
   it('it "sees through" an array', () => {
     let query = compileMongoQuery({points: {points: 85}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(2);
+    let record = {points: [{points: 85}, {points: 86}]};
+    let result = query(record);
+    expect(result).to.be.true;
   });
 });

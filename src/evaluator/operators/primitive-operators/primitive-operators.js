@@ -41,13 +41,15 @@ export const primitiveOperators = {
           } else if(value === options) {
             break;
           } else if(j === testValues.length - 1) {
-            return;
+            return false;
           }
         }
       }
       
       return true;
     }
+
+    return false;
   },
   
   $lt: generateComparator('lt'),

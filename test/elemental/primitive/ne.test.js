@@ -1,23 +1,31 @@
 import {expect}            from 'chai';
-import data                from '../../_fixtures/data';
 import {compileMongoQuery} from '../../../src/mongo-query-compiler';
 
 describe('$ne', () => {
   it('performs inequality', () => {
-    let query = compileMongoQuery({_id: {$ne: 1}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(5);
-  });  
-  
+    let query = compileMongoQuery({id: {$ne: 1}});
+    let record = {id: 5};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.id = 1;
+    result = query(record);
+    expect(result).to.be.false;
+  });
+
   it('performs deep inequality', () => {
     let query = compileMongoQuery({favorites: {$ne: {artist: 'Picasso', food: 'pizza', color: 'black'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(5);
+    let record = {favorites: {artist: 'Picasso', food: 'pizza', color: 'blue'}}
+    let result = query(record);
+    expect(result).to.be.true;
+    record.favorites.color = 'black';
+    result = query(record);
+    expect(result).to.be.false;
   });
   
   it('shortcircuits evaluation for $ne and $nin if property does not exist', () => {
     let query = compileMongoQuery({dmitriy: {$ne: 1}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(0);
+    let record = {id: 2};
+    let result = query(record);
+    expect(result).to.be.false;
   });
 });

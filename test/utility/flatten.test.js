@@ -1,16 +1,15 @@
 import {expect}            from 'chai';
-import data                from '../_fixtures/data-big';
 import {compileMongoQuery} from '../../src/mongo-query-compiler';
 
 describe('$flatten', () => {
   it('flattens nested arrays', () => {
-    let query = compileMongoQuery({'store.employees.name': {first: /^J/}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(0);
-    
-    query = compileMongoQuery({store: {employees: {name: {first: {$eq: /^J/, $flatten: true}}}}});
-    results = data.filter(query);
-    expect(results.length).to.equal(1);
+    let query = compileMongoQuery({'store.employees.name': {first: /^X/}});
+    let record = {store: [{id: 2, employees: [{name: {first: 'Xavier'}}]}]};
+    let result = query(record);
+    expect(result).to.be.false;
+    query = compileMongoQuery({'store.employees.name': {first: /^X/, $flatten: true}});
+    result = query(record);
+    expect(result).to.be.true;
   });
   
   it('can be placed anywhere in the query', () => {
@@ -23,7 +22,7 @@ describe('$flatten', () => {
               first: {
                 $and: {
                   $or: {
-                    $eq: /^j/i
+                    $eq: /^x/i
                   }
                 }
               }
@@ -32,14 +31,15 @@ describe('$flatten', () => {
         }
       }
     });
-    
-    let results = data.filter(query);
-    expect(results.length).to.equal(1);
+    let record = {store: [{id: 2, employees: [{name: {first: 'Xavier'}}]}]};
+    let result = query(record);
+    expect(result).to.be.true;
   });
   
   it('works with $ref', () => {
     let query = compileMongoQuery({'tags.2': {$in: {$ref: 'store.employees.name.first', $flatten: true}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(1);
+    let record = {store: [{id: 2, employees: [{name: {first: 'Xavier'}}]}], tags: ['Jack', 'John', 'Xavier']};
+    let result = query(record);
+    expect(result).to.be.true;
   });
 });

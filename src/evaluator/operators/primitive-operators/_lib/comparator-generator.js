@@ -11,5 +11,7 @@ export function generateComparator(operator) {
         return true;
       }
     }
+
+    return false;
   };
 }

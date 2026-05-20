@@ -1,17 +1,24 @@
 import {expect}            from 'chai';
-import data                from '../_fixtures/data';
 import {compileMongoQuery} from '../../src/mongo-query-compiler';
 
 describe('$nor', () => {
   it('performs explicit $nor operation using object of queries', () => {
     let query = compileMongoQuery({favorites: {$nor: {artist: 'Noguchi', food: 'cake'}}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(4);
+    let record = {favorites: {artist: 'Mozart', food: 'ice cream'}};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.favorites.food = 'cake';
+    result = query(record);
+    expect(result).to.be.false;
   });
   
   it('performs explicit $nor operaiton using array of queries', () => {
     let query = compileMongoQuery({favorites: {$nor: [{artist: 'Noguchi'}, {food: 'cake'}]}});
-    let results = data.filter(query);
-    expect(results.length).to.equal(4);
+    let record = {favorites: {artist: 'Mozart', food: 'ice cream'}};
+    let result = query(record);
+    expect(result).to.be.true;
+    record.favorites.food = 'cake';
+    result = query(record);
+    expect(result).to.be.false;
   });
 });

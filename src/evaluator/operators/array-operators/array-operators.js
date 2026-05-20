@@ -8,7 +8,7 @@ export const arrayOperators = {
 
     for(let value of all) {
       if(!array.includes(value)) {
-        return;
+        return false;
       }
     }
 
@@ -25,7 +25,7 @@ export const arrayOperators = {
       symbolTable[symbolName] = filterer;
     }
     
-    return array.filter(filterer).length;
+    return !!array.filter(filterer).length;
   },
   
   $size(array, size) {
