@@ -1,4 +1,4 @@
-import {operators} from '../evaluator/operators/operators';
+import {operators} from '../../evaluator/operators/operators';
 
 export const operatorTypes = {
   elementals: new Set(Object.keys(operators)),

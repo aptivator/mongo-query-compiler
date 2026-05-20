@@ -3,12 +3,11 @@ import path                     from 'path';
 import {packageJsonBaseFields}  from './_lib/vars';
 import {writePackageJsonPlugin} from './rollup-plugin-write-package-json/rollup-plugin-write-package-json.js';
 
-let fileName = 'mongo-query-compiler';
 let packageJson = require('../package.json');
 let {name} = packageJson;
-let input = `src/${fileName}.js`;
-let main = `./${fileName}.js`;
-let module = `./${fileName}.esm.js`;
+let input = `src/${name}.js`;
+let main = `./${name}.js`;
+let module = `./${name}.esm.js`;
 let exports = {require: main, import: module};
 let distDir = path.resolve(__dirname, '../dist');
 let globals = {lodash: '_', 'object-browser': 'browser'};
