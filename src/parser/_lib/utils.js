@@ -1,13 +1,10 @@
+import {isPlainObject} from '../../_lib/utils';
 import {operatorTypes} from './vars';
 
 export const getId = (() => {
   let symbolCounter = 0;
   return () => symbolCounter++;
 })()
-
-export function isPlainObject(o) {
-  return o && o.constructor === Object;
-}
 
 export function isUnwindableOperand(operator, operand) {
   if(isPlainObject(operand)) {
